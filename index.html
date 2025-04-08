@@ -184,6 +184,8 @@
 
     <nav>
         <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#downloads">Downloads</a></li>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#structure">Project Structure</a></li>
             <li><a href="#dependencies">Dependencies</a></li>
@@ -195,6 +197,28 @@
     </nav>
 
     <main>
+        <section id="about">
+            <h2>About Flow Desktop</h2>
+            <p>Welcome to <strong>Flow Desktop</strong>, a lightweight and highly customizable desktop environment designed to bring a modern, seamless user experience to your system. Built with Python, PyQt5, and Xlib, Flow Desktop is inspired by the elegance and functionality of KDE Plasma, but with a focus on minimal resource usage and maximum flexibility.</p>
+            <p>Flow Desktop is perfect for users who want a clean, efficient, and visually appealing desktop environment that can be tailored to their needs. Whether you're a developer looking for a distraction-free workspace, a power user who needs quick access to applications, or someone who simply wants a beautiful desktop, Flow Desktop has something to offer.</p>
+            <h3>Why Use Flow Desktop?</h3>
+            <ul>
+                <li><strong>Lightweight Performance</strong>: Flow Desktop is designed to run smoothly on a wide range of hardware, from low-end machines to high-performance systems.</li>
+                <li><strong>Customization</strong>: With the built-in settings app, you can easily change wallpapers, adjust the taskbar position, customize theme colors, and manage your favorite apps.</li>
+                <li><strong>Modern Features</strong>: Enjoy desktop icons with drag-and-drop, a taskbar with an app launcher and system tray, and window management features like snapping and keyboard shortcuts.</li>
+                <li><strong>Cross-Platform Support</strong>: While primarily designed for Linux, Flow Desktop includes wallpaper support for Windows and macOS, with plans for broader compatibility in the future.</li>
+                <li><strong>Open Source</strong>: Flow Desktop is open-source, meaning you can contribute to its development, customize it to your liking, or even fork it for your own projects.</li>
+            </ul>
+            <p>Whether you're setting up a new system, looking to replace your current desktop environment, or experimenting with a custom setup, Flow Desktop provides a fresh and intuitive experience that adapts to your workflow.</p>
+        </section>
+
+        <section id="downloads">
+            <h2>Downloads</h2>
+            <p>Ready to try Flow Desktop? You can download the latest version from our Google Drive folder:</p>
+            <p><a href="https://drive.google.com/drive/folders/1nZ52rsDBNMB939QgHcruSetwIXxcikWI?usp=sharing" target="_blank">Download Flow Desktop</a></p>
+            <p>Inside the folder, you'll find the source code, pre-built binaries (if available), and additional resources to help you get started. Be sure to check the <a href="#usage">Usage Instructions</a> section for installation steps.</p>
+        </section>
+
         <section id="overview">
             <h2>Project Overview</h2>
             <p><strong>Flow Desktop</strong> is a lightweight, customizable desktop environment built with Python, PyQt5, and Xlib. It provides a modern desktop experience with features like desktop icons, a taskbar with an app launcher, a system tray, window management, and a settings app. This documentation details the project structure, each file's purpose, and the functions within them.</p>
@@ -1055,16 +1079,3 @@ def start_desktop():
             <p>Provides an overview of the project and usage instructions.</p>
             <h4>Content:</h4>
             <pre><code># Flow Desktop
-
-A lightweight, customizable desktop environment built with Python, PyQt5, and Xlib. Flow Desktop aims to provide a modern desktop experience similar to KDE Plasma, with features like desktop icons, a taskbar with app launcher, system tray, and window management.
-
-## Features
-- **Desktop Icons**: View and interact with files/folders on the desktop with drag-and-drop and context menus.
-- **Taskbar**: Includes an app launcher with search, window previews, and a system tray showing clock, battery, and network status.
-- **Window Management**: Supports window dragging, snapping (left/right), minimize (Alt+M), and maximize/restore (Alt+F).
-- **Settings App**: Customize wallpaper, taskbar position, theme colors, and manage taskbar apps.
-- **Cross-Platform Wallpaper**: Wallpaper support for Linux, Windows, and macOS.
-
-## Requirements
-- Python 3.x
-- PyQt5 (`
