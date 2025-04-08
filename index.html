@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Desktop Documentation</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 2px solid #e94560;
+        }
+
+        header img {
+            max-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #e0e0e0;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #0f3460;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e94560;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            background-color: #16213e;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #e94560;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e94560;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background-color: #0f3460;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e94560;
+        }
+
+        pre {
+            background-color: #0f3460;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #e0e0e0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0f3460;
+            padding: 1rem;
+            text-align: center;
+            color: #e0e0e0;
+            border-top: 2px solid #e94560;
+        }
+
+        footer a {
+            color: #e94560;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            section {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Flow Desktop Logo">
+        <h1>Flow Desktop Documentation</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#structure">Project Structure</a></li>
+            <li><a href="#dependencies">Dependencies</a></li>
+            <li><a href="#files">File Documentation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#limitations">Limitations</a></li>
+            <li><a href="#contributing">Contributing</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="overview">
+            <h2>Project Overview</h2>
+            <p><strong>Flow Desktop</strong> is a lightweight, customizable desktop environment built with Python, PyQt5, and Xlib. It provides a modern desktop experience with features like desktop icons, a taskbar with an app launcher, a system tray, window management, and a settings app. This documentation details the project structure, each file's purpose, and the functions within them.</p>
+            <p>Flow Desktop aims to replicate the functionality of a modern desktop environment like KDE Plasma while remaining lightweight and modular. Key features include:</p>
+            <ul>
+                <li><strong>Desktop Icons</strong>: View and interact with files/folders on the desktop with drag-and-drop and context menus.</li>
+                <li><strong>Taskbar</strong>: Includes an app launcher with search and icons, window previews, and a system tray showing clock, battery, and network status.</li>
+                <li><strong>Window Management</strong>: Supports window dragging, snapping (left/right), minimize (Alt+M), and maximize/restore (Alt+F).</li>
+                <li><strong>Settings App</strong>: Customize wallpaper, taskbar position, theme colors, and manage taskbar apps.</li>
+                <li><strong>Cross-Platform Wallpaper</strong>: Wallpaper support for Linux, Windows, and macOS.</li>
+            </ul>
+        </section>
+
+        <section id="structure">
+            <h2>Project Structure</h2>
+            <p>The project consists of the following files:</p>
+            <pre><code>flow/
+├── config.json        # Configuration file for wallpaper, apps, and settings
+├── dark.qss          # Stylesheet for dark theme
+├── light.qss         # Stylesheet for light theme
+├── logo.png          # Logo image for the taskbar
+├── main.py           # Entry point to start the desktop
+├── settings.py       # Settings app for customizing the desktop
+├── taskbar.py        # Taskbar with app launcher and system tray
+├── tray.py           # System tray component showing clock, battery, and network
+├── wallpaper.py      # Wallpaper management functions
+├── wm.py             # Window manager for handling window events
+├── desktop.py        # Desktop component for managing icons
+└── README.md         # Project documentation and usage instructions</code></pre>
+        </section>
+
+        <section id="dependencies">
+            <h2>Dependencies</h2>
+            <ul>
+                <li><strong>Python 3.x</strong></li>
+                <li><strong>PyQt5</strong>: For GUI components (<code>pip install PyQt5</code>)</li>
+                <li><strong>python-xlib</strong>: For window management on Linux (<code>pip install python-xlib</code>)</li>
+                <li><strong>psutil</strong>: For system information in the tray (<code>pip install psutil</code>)</li>
+            </ul>
+        </section>
+
+        <section id="files">
+            <h2>File-by-File Documentation</h2>
+
+            <h3>1. <code>config.json</code></h3>
+            <p>This JSON file stores the configuration for the desktop environment.</p>
+            <h4>Structure:</h4>
+            <pre><code>{
+  "wallpaper": "wallpaper_lake.png",
+  "taskbar_position": "top",
+  "theme": "light",
+  "theme_color": "#222222",
+  "apps": [
+    { "name": "Terminal", "command": ["x-terminal-emulator"], "icon": "/usr/share/icons/terminal.png" },
+    { "name": "File Manager", "command": ["xdg-open", "."], "icon": "/usr/share/icons/folder.png" },
+    { "name": "Browser", "command": ["xdg-open", "http://www.google.com"], "icon": "/usr/share/icons/browser.png" },
+    { "name": "VS Code", "command": ["code"], "icon": "/usr/share/icons/vscode.png" },
+    { "name": "Calculator", "command": ["gnome-calculator"], "icon": "/usr/share/icons/calculator.png" }
+  ]
+}</code></pre>
+            <h4>Fields:</h4>
+            <ul>
+                <li><code>wallpaper</code>: Path to the wallpaper image.</li>
+                <li><code>taskbar_position</code>: <code>"top"</code> or <code>"bottom"</code>.</li>
+                <li><code>theme</code>: <code>"light"</code> or <code>"dark"</code>.</li>
+                <li><code>theme_color</code>: Hex color code for the theme.</li>
+                <li><code>apps</code>: List of apps in the taskbar, each with <code>name</code>, <code>command</code>, and optional <code>icon</code>.</li>
+            </ul>
+
+            <h3>2. <code>dark.qss</code> and <code>light.qss</code></h3>
+            <p>These are Qt stylesheet files for theming the desktop. They define the appearance of widgets in dark and light modes, respectively.</p>
+            <h4>Example (<code>dark.qss</code>):</h4>
+            <pre><code>QWidget {
+    background-color: #222;
+    color: white;
+}
+QPushButton {
+    background-color: #333;
+    border: none;
+}</code></pre>
+
+            <h3>3. <code>logo.png</code></h3>
+            <p>A small image file used as the logo for the taskbar's app launcher button.</p>
+
+            <h3>4. <code>main.py</code></h3>
+            <p>The entry point for the desktop environment. It initializes the configuration, installs dependencies, and starts all components in separate threads.</p>
+            <h4>Code:</h4>
+            <pre><code>import threading
+from desktop_env.wm import start_window_manager
+from desktop_env.taskbar import start_taskbar
+from desktop_env.wallpaper import set_wallpaper_from_config
+from desktop_env.settings import start_settings_app
+from desktop_env.desktop import start_desktop
+import os
+import json
+import subprocess
+import sys
+
+required_modules = ['PyQt5', 'Xlib', 'psutil']
+for module in required_modules:
+    try:
+        __import__(module)
+    except ImportError:
+        print(f"Module '{module}' not found. Installing...")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", module])
+        except Exception as e:
+            print(f"Failed to install {module}: {e}")
+            sys.exit(1)
+
+default_config = {
+    "theme": "light",
+    "wallpaper": "/usr/share/backgrounds/default.jpg",
+    "taskbar_position": "top",
+    "theme_color": "#222222",
+    "apps": []
+}
+
+if not os.path.exists("config.json"):
+    with open("config.json", "w") as f:
+        json.dump(default_config, f, indent=4)
+
+def main():
+    try:
+        set_wallpaper_from_config()
+    except Exception as e:
+        print(f"Failed to set wallpaper: {e}")
+
+    try:
+        desktop_thread = threading.Thread(target=start_desktop)
+        wm_thread = threading.Thread(target=start_window_manager)
+        taskbar_thread = threading.Thread(target=start_taskbar)
+        desktop_thread.start()
+        wm_thread.start()
+        taskbar_thread.start()
+        start_settings_app()
+        desktop_thread.join()
+        wm_thread.join()
+        taskbar_thread.join()
+    except Exception as e:
+        print(f"Error running desktop: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+            <h4>Functions:</h4>
+            <ul>
+                <li><strong><code>main()</code></strong>: The main function that:
+                    <ul>
+                        <li>Sets the wallpaper using <code>set_wallpaper_from_config()</code>.</li>
+                        <li>Starts the desktop, window manager, and taskbar in separate threads.</li>
+                        <li>Launches the settings app in the main thread.</li>
+                        <li>Handles errors and exits gracefully if an exception occurs.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Installs missing dependencies automatically.</li>
+                <li>Creates a default <code>config.json</code> if it doesn’t exist.</li>
+                <li>Uses threading to run components concurrently.</li>
+            </ul>
+
+            <h3>5. <code>settings.py</code></h3>
+            <p>The settings app allows users to customize the desktop environment, including wallpaper, taskbar apps, taskbar position, and theme color.</p>
+            <h4>Code:</h4>
+            <pre><code>import json
+from pathlib import Path
+from PyQt5.QtWidgets import (
+    QApplication, QWidget, QLabel, QPushButton, QFileDialog,
+    QVBoxLayout, QListWidget, QHBoxLayout, QLineEdit, QListWidgetItem, QMessageBox, QComboBox, QColorDialog
+)
+from desktop_env.wallpaper import set_wallpaper
+import sys
+
+CONFIG_PATH = Path(__file__).parent / "config.json"
+
+class SettingsApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Desktop Settings")
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        self.config = self.load_config()
+
+        self.init_wallpaper_section()
+        self.init_apps_section()
+        self.init_appearance_section()
+
+    def load_config(self):
+        with open(CONFIG_PATH, "r") as f:
+            return json.load(f)
+
+    def save_config(self):
+        with open(CONFIG_PATH, "w") as f:
+            json.dump(self.config, f, indent=4)
+
+    def init_wallpaper_section(self):
+        self.layout.addWidget(QLabel("Wallpaper:"))
+        self.wallpaper_btn = QPushButton("Change Wallpaper")
+        self.wallpaper_btn.clicked.connect(self.choose_wallpaper)
+        self.layout.addWidget(self.wallpaper_btn)
+
+    def choose_wallpaper(self):
+        file, _ = QFileDialog.getOpenFileName(self, "Select Wallpaper")
+        if file:
+            self.config["wallpaper"] = file
+            self.save_config()
+            set_wallpaper(file)
+
+    def init_apps_section(self):
+        self.layout.addWidget(QLabel("Apps in Taskbar:"))
+
+        self.app_list = QListWidget()
+        for app in self.config["apps"]:
+            item = QListWidgetItem(f'{app["name"]} - {app["command"]}')
+            self.app_list.addItem(item)
+        self.layout.addWidget(self.app_list)
+
+        app_input_layout = QHBoxLayout()
+        self.name_input = QLineEdit()
+        self.name_input.setPlaceholderText("App Name")
+        self.command_input = QLineEdit()
+        self.command_input.setPlaceholderText("Command (e.g. xdg-open .)")
+        app_input_layout.addWidget(self.name_input)
+        app_input_layout.addWidget(self.command_input)
+
+        self.layout.addLayout(app_input_layout)
+
+        btn_layout = QHBoxLayout()
+
+        add_btn = QPushButton("Add App")
+        add_btn.clicked.connect(self.add_app)
+        btn_layout.addWidget(add_btn)
+
+        remove_btn = QPushButton("Remove Selected App")
+        remove_btn.clicked.connect(self.remove_app)
+        btn_layout.addWidget(remove_btn)
+
+        self.layout.addLayout(btn_layout)
+
+    def add_app(self):
+        name = self.name_input.text().strip()
+        command = self.command_input.text().strip().split()
+
+        if not name or not command:
+            QMessageBox.warning(self, "Input Error", "Please enter both a name and a command.")
+            return
+
+        app_entry = {"name": name, "command": command}
+        self.config["apps"].append(app_entry)
+        self.app_list.addItem(f'{name} - {command}')
+        self.save_config()
+
+        self.name_input.clear()
+        self.command_input.clear()
+
+    def remove_app(self):
+        selected_items = self.app_list.selectedItems()
+        if not selected_items:
+            return
+        for item in selected_items:
+            index = self.app_list.row(item)
+            self.app_list.takeItem(index)
+            del self.config["apps"][index]
+        self.save_config()
+
+    def init_appearance_section(self):
+        self.layout.addWidget(QLabel("Appearance:"))
+
+        taskbar_layout = QHBoxLayout()
+        taskbar_layout.addWidget(QLabel("Taskbar Position:"))
+        self.taskbar_pos = QComboBox()
+        self.taskbar_pos.addItems(["top", "bottom"])
+        self.taskbar_pos.setCurrentText(self.config.get("taskbar_position", "top"))
+        self.taskbar_pos.currentTextChanged.connect(self.update_taskbar_position)
+        taskbar_layout.addWidget(self.taskbar_pos)
+        self.layout.addLayout(taskbar_layout)
+
+        color_layout = QHBoxLayout()
+        color_layout.addWidget(QLabel("Theme Color:"))
+        self.color_btn = QPushButton("Choose Color")
+        self.color_btn.clicked.connect(self.choose_color)
+        color_layout.addWidget(self.color_btn)
+        self.layout.addLayout(color_layout)
+
+    def update_taskbar_position(self, position):
+        self.config["taskbar_position"] = position
+        self.save_config()
+        QMessageBox.information(self, "Restart Required", "Please restart Flow Desktop to apply taskbar position.")
+
+    def choose_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.config["theme_color"] = color.name()
+            self.save_config()
+            QApplication.instance().setStyleSheet(f"""
+                QWidget {{ background-color: {color.name()}; }}
+                QPushButton {{ background-color: {color.name()}; }}
+            """)
+
+def start_settings_app():
+    app = QApplication(sys.argv)
+
+    with open("config.json", "r") as f:
+        config = json.load(f)
+    theme = config.get("theme", "light")
+    if theme == "dark":
+        app.setStyleSheet(open("dark.qss").read())
+    else:
+        app.setStyleSheet(open("light.qss").read())
+
+    win = SettingsApp()
+    win.show()
+    app.exec_()
+</code></pre>
+            <h4>Classes and Functions:</h4>
+            <ul>
+                <li><strong><code>SettingsApp</code> Class</strong>:
+                    <ul>
+                        <li><code>__init__()</code>: Initializes the settings window, loads the config, and sets up sections.</li>
+                        <li><code>load_config()</code>: Loads <code>config.json</code>.</li>
+                        <li><code>save_config()</code>: Saves changes to <code>config.json</code>.</li>
+                        <li><code>init_wallpaper_section()</code>: Adds a button to change the wallpaper.</li>
+                        <li><code>choose_wallpaper()</code>: Opens a file dialog to select a new wallpaper and applies it.</li>
+                        <li><code>init_apps_section()</code>: Sets up the UI for managing taskbar apps.</li>
+                        <li><code>add_app()</code>: Adds a new app to the taskbar list.</li>
+                        <li><code>remove_app()</code>: Removes a selected app from the taskbar list.</li>
+                        <li><code>init_appearance_section()</code>: Adds options for taskbar position and theme color.</li>
+                        <li><code>update_taskbar_position(position)</code>: Updates the taskbar position in the config.</li>
+                        <li><code>choose_color()</code>: Opens a color dialog and applies the selected color to the desktop.</li>
+                    </ul>
+                </li>
+                <li><strong><code>start_settings_app()</code></strong>: Entry point to launch the settings app.</li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Manages wallpaper, taskbar apps, and appearance settings.</li>
+                <li>Applies theme color globally using <code>QApplication.setStyleSheet()</code>.</li>
+            </ul>
+
+            <h3>6. <code>taskbar.py</code></h3>
+            <p>The taskbar provides an app launcher, window previews, and a system tray.</p>
+            <h4>Code:</h4>
+            <pre><code>import sys
+import json
+import subprocess
+from PyQt5.QtWidgets import (
+    QApplication, QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, 
+    QListWidget, QListWidgetItem, QLineEdit, QWidget, QLabel, QGridLayout, QToolTip
+)
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt, QSize, QTimer, QTime, QRect
+from tray import SystemTray
+
+CONFIG_PATH = "config.json"
+
+def load_config():
+    try:
+        with open(CONFIG_PATH, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error loading config: {e}")
+        return {}
+
+class AppsMenu(QWidget):
+    def __init__(self, apps, parent=None):
+        super().__init__(parent)
+        self.apps = apps
+        self.setWindowFlags(Qt.Popup | Qt.FramelessWindowHint)
+        self.setStyleSheet("""
+            background-color: #222;
+            color: white;
+            border: 1px solid #444;
+        """)
+        layout = QVBoxLayout()
+
+        self.search_input = QLineEdit(self)
+        self.search_input.setPlaceholderText("Search apps...")
+        self.search_input.textChanged.connect(self.filter_apps)
+        self.search_input.setStyleSheet("padding: 5px; background: #333; border: none;")
+        layout.addWidget(self.search_input)
+
+        self.grid_widget = QWidget()
+        self.grid_layout = QGridLayout(self.grid_widget)
+        self.grid_layout.setSpacing(10)
+        self.grid_widget.setStyleSheet("background: transparent;")
+        layout.addWidget(self.grid_widget)
+
+        self.all_buttons = []
+        self.update_grid(self.apps)
+
+        self.setLayout(layout)
+        self.adjustSize()
+
+    def update_grid(self, apps):
+        for button in self.all_buttons:
+            self.grid_layout.removeWidget(button)
+            button.deleteLater()
+        self.all_buttons.clear()
+
+        for i, app_entry in enumerate(apps):
+            name = app_entry.get("name")
+            command = app_entry.get("command")
+            icon_path = app_entry.get("icon")
+            if name and command:
+                btn = QPushButton(name)
+                if icon_path:
+                    btn.setIcon(QIcon(icon_path))
+                    btn.setIconSize(QSize(24, 24))
+                btn.setStyleSheet("""
+                    QPushButton {
+                        background: #333;
+                        padding: 10px;
+                        border: none;
+                        color: white;
+                        text-align: left;
+                    }
+                    QPushButton:hover {
+                        background: #555;
+                    }
+                """)
+                btn.clicked.connect(lambda _, cmd=command: subprocess.Popen(cmd))
+                row = i // 3
+                col = i % 3
+                self.grid_layout.addWidget(btn, row, col)
+                self.all_buttons.append(btn)
+
+    def filter_apps(self, text):
+        filtered = [app for app in self.apps if text.lower() in app.get("name", "").lower()]
+        self.update_grid(filtered)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return and self.all_buttons:
+            self.all_buttons[0].click()
+        elif event.key() == Qt.Key_Escape:
+            self.close()
+
+class Taskbar(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        self.config = load_config()
+        self.apps = self.config.get("apps", [])
+        self.windows = []
+
+        position = self.config.get("taskbar_position", "top")
+        screen = QApplication.primaryScreen().geometry()
+        height = 30
+        if position == "bottom":
+            self.setGeometry(0, screen.height() - height, screen.width(), height)
+        else:
+            self.setGeometry(0, 0, screen.width(), height)
+        theme_color = self.config.get("theme_color", "black")
+        self.setStyleSheet(f"background-color: {theme_color};")
+
+        self.logo_button = QPushButton(self)
+        self.logo_button.setIcon(QIcon("logo.png"))
+        self.logo_button.setIconSize(QSize(24, 24))
+        self.logo_button.setGeometry(5, 3, 24, 24)
+        self.logo_button.setStyleSheet("background: transparent; border: none;")
+
+        self.apps_menu = None
+        self.logo_button.clicked.connect(self.toggle_apps_menu)
+
+        self.window_buttons = []
+        self.window_area = QWidget(self)
+        self.window_area.setGeometry(40, 0, screen.width() - 140, 30)
+        self.window_layout = QHBoxLayout(self.window_area)
+        self.window_layout.setSpacing(5)
+
+        self.tray = SystemTray()
+        self.tray.setParent(self)
+        self.tray.setGeometry(screen.width() - 100, 0, 100, 30)
+
+        self.window_timer = QTimer()
+        self.window_timer.timeout.connect(self.update_windows)
+        self.window_timer.start(1000)
+        self.update_windows()
+
+    def toggle_apps_menu(self):
+        if self.apps_menu is None or not self.apps_menu.isVisible():
+            self.apps_menu = AppsMenu(self.apps, self)
+            pos = self.logo_button.mapToGlobal(self.logo_button.rect().bottomLeft())
+            self.apps_menu.setGeometry(QRect(pos.x(), pos.y(), 300, 400))
+            self.apps_menu.show()
+            self.apps_menu.search_input.setFocus()
+        else:
+            self.apps_menu.close()
+
+    def update_windows(self):
+        global open_windows
+        for btn in self.window_buttons:
+            self.window_layout.removeWidget(btn)
+            btn.deleteLater()
+        self.window_buttons.clear()
+
+        for win in open_windows:
+            btn = QPushButton(win["name"], self.window_area)
+            btn.setStyleSheet("color: white; background: #333; border: none;")
+            btn.setFixedWidth(150)
+            btn.setToolTip(win["name"])
+            self.window_layout.addWidget(btn)
+            self.window_buttons.append(btn)
+
+def start_taskbar():
+    app = QApplication(sys.argv)
+    taskbar = Taskbar()
+    taskbar.show()
+    app.exec_()
+
+if __name__ == "__main__":
+    start_taskbar()
+</code></pre>
+            <h4>Classes and Functions:</h4>
+            <ul>
+                <li><strong><code>load_config()</code></strong>: Loads <code>config.json</code> with error handling.</li>
+                <li><strong><code>AppsMenu</code> Class</strong>:
+                    <ul>
+                        <li><code>__init__(apps, parent)</code>: Initializes the app menu with a search bar and grid layout.</li>
+                        <li><code>update_grid(apps)</code>: Populates the grid with app buttons, including icons if specified.</li>
+                        <li><code>filter_apps(text)</code>: Filters apps based on the search input.</li>
+                        <li><code>keyPressEvent(event)</code>: Handles keyboard navigation (Enter to launch, Escape to close).</li>
+                    </ul>
+                </li>
+                <li><strong><code>Taskbar</code> Class</strong>:
+                    <ul>
+                        <li><code>__init__()</code>: Sets up the taskbar with a logo button, window area, and system tray.</li>
+                        <li><code>toggle_apps_menu()</code>: Shows or hides the app menu.</li>
+                        <li><code>update_windows()</code>: Updates the list of open windows in the taskbar.</li>
+                    </ul>
+                </li>
+                <li><strong><code>start_taskbar()</code></strong>: Entry point to launch the taskbar.</li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul>
+                <li>App menu with search, grid layout, and icon support.</li>
+                <li>Window previews updated every second.</li>
+                <li>Taskbar position and theme color applied from <code>config.json</code>.</li>
+            </ul>
+
+            <h3>7. <code>tray.py</code></h3>
+            <p>The system tray displays system information like clock, battery, and network status.</p>
+            <h4>Code:</h4>
+            <pre><code>import psutil
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel
+from PyQt5.QtCore import QTimer, QTime
+
+class SystemTray(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.clock = QLabel()
+        self.volume = QLabel("🔊")
+        self.battery = QLabel()
+        self.network = QLabel()
+
+        layout.addWidget(self.network)
+        layout.addWidget(self.battery)
+        layout.addWidget(self.volume)
+        layout.addWidget(self.clock)
+
+        self.setLayout(layout)
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_status)
+        self.timer.start(1000)
+        self.update_status()
+
+    def update_status(self):
+        current_time = QTime.currentTime().toString("HH:mm")
+        self.clock.setText(current_time)
+
+        battery = psutil.sensors_battery()
+        if battery:
+            self.battery.setText(f"🔋 {int(battery.percent)}%")
+        else:
+            self.battery.setText("🔋 N/A")
+
+        self.network.setText("📶")
+</code></pre>
+            <h4>Classes and Functions:</h4>
+            <ul>
+                <li><strong><code>SystemTray</code> Class</strong>:
+                    <ul>
+                        <li><code>__init__()</code>: Initializes the tray with labels for clock, volume, battery, and network.</li>
+                        <li><code>update_status()</code>: Updates the tray every second with the current time, battery percentage, and network status.</li>
+                    </ul>
+                </li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Displays system information in a compact layout.</li>
+                <li>Updates dynamically using a <code>QTimer</code>.</li>
+            </ul>
+
+            <h3>8. <code>wallpaper.py</code></h3>
+            <p>Handles wallpaper management across different platforms.</p>
+            <h4>Code:</h4>
+            <pre><code>import json
+import subprocess
+import platform
+from pathlib import Path
+
+CONFIG_PATH = Path(__file__).parent / "config.json"
+
+def get_wallpaper_path():
+    with open(CONFIG_PATH, "r") as f:
+        data = json.load(f)
+    return data.get("wallpaper")
+
+def set_wallpaper(path):
+    system = platform.system()
+    if system == "Linux":
+        subprocess.call(["feh", "--bg-scale", path])
+    elif system == "Windows":
+        import ctypes
+        ctypes.windll.user32.SystemParametersInfoW(20, 0, path, 0)
+    elif system == "Darwin":
+        subprocess.call(["osascript", "-e", f'tell app "Finder" to set desktop picture to POSIX file "{path}"'])
+
+def set_wallpaper_from_config():
+    path = get_wallpaper_path()
+    if path:
+        set_wallpaper(path)
+</code></pre>
+            <h4>Functions:</h4>
+            <ul>
+                <li><strong><code>get_wallpaper_path()</code></strong>: Retrieves the wallpaper path from <code>config.json</code>.</li>
+                <li><strong><code>set_wallpaper(path)</code></strong>: Sets the wallpaper based on the operating system.</li>
+                <li><strong><code>set_wallpaper_from_config()</code></strong>: Sets the wallpaper using the path from <code>config.json</code>.</li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Cross-platform wallpaper support for Linux, Windows, and macOS.</li>
+            </ul>
+
+            <h3>9. <code>wm.py</code></h3>
+            <p>The window manager handles window events like mapping, dragging, snapping, and minimizing/maximizing.</p>
+            <h4>Code:</h4>
+            <pre><code>from Xlib import X, display
+from Xlib.ext import record
+from Xlib.protocol import rq
+
+open_windows = []
+
+def get_window_under_cursor(d):
+    pointer = d.screen().root.query_pointer()
+    win = pointer.child
+    return win
+
+def start_window_manager():
+    global open_windows
+    d = display.Display()
+    root = d.screen().root
+    root.change_attributes(event_mask=X.SubstructureRedirectMask | X.SubstructureNotifyMask | X.ButtonPressMask | X.ButtonReleaseMask | X.PointerMotionMask | X.KeyPressMask)
+
+    drag_window = None
+    drag_start = (0, 0)
+    focused_window = None
+
+    while True:
+        event = d.next_event()
+
+        if event.type == X.MapRequest:
+            win = event.window
+            win.map()
+            win.change_attributes(event_mask=X.EnterWindowMask)
+            try:
+                name = win.get_wm_name() or "Untitled"
+            except:
+                name = "Untitled"
+            open_windows.append({"id": win.id, "name": name})
+
+        elif event.type == X.EnterNotify:
+            win = event.window
+            if focused_window != win:
+                if focused_window:
+                    focused_window.configure(border_width=1)
+                win.configure(border_width=2)
+                focused_window = win
+                d.set_input_focus(win, X.RevertToParent, X.CurrentTime)
+
+        elif event.type == X.ButtonPress and event.detail == 1:
+            pointer = root.query_pointer()
+            drag_window = get_window_under_cursor(d)
+            if drag_window:
+                geom = drag_window.get_geometry()
+                drag_start = (pointer.root_x - geom.x, pointer.root_y - geom.y)
+
+        elif event.type == X.MotionNotify and drag_window:
+            pointer = root.query_pointer()
+            new_x = pointer.root_x - drag_start[0]
+            new_y = pointer.root_y - drag_start[1]
+            screen_width = root.get_geometry().width
+            if new_x < 50:
+                drag_window.configure(x=0, y=0, width=screen_width//2, height=root.get_geometry().height)
+                drag_window = None
+            elif new_x + drag_window.get_geometry().width > screen_width - 50:
+                drag_window.configure(x=screen_width//2, y=0, width=screen_width//2, height=root.get_geometry().height)
+                drag_window = None
+            else:
+                drag_window.configure(x=new_x, y=new_y)
+            d.sync()
+
+        elif event.type == X.ButtonRelease:
+            drag_window = None
+
+        elif event.type == X.KeyPress:
+            keycode = event.detail
+            state = event.state
+            if keycode == 58 and state & X.Mod1Mask:
+                win = get_window_under_cursor(d)
+                if win:
+                    win.unmap()
+                    open_windows = [w for w in open_windows if w["id"] != win.id]
+            elif keycode == 41 and state & X.Mod1Mask:
+                win = get_window_under_cursor(d)
+                if win:
+                    geom = win.get_geometry()
+                    if geom.width == root.get_geometry().width:
+                        win.configure(width=800, height=600)
+                    else:
+                        win.configure(x=0, y=0, width=root.get_geometry().width, height=root.get_geometry().height)
+</code></pre>
+            <h4>Functions:</h4>
+            <ul>
+                <li><strong><code>get_window_under_cursor(d)</code></strong>: Returns the window under the mouse cursor.</li>
+                <li><strong><code>start_window_manager()</code></strong>: Main loop for handling window events:
+                    <ul>
+                        <li>Maps new windows and adds them to <code>open_windows</code>.</li>
+                        <li>Handles window focus with border width changes.</li>
+                        <li>Supports dragging and snapping windows to the left/right.</li>
+                        <li>Handles minimize (Alt+M) and maximize/restore (Alt+F).</li>
+                    </ul>
+                </li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Window snapping to left/right halves of the screen.</li>
+                <li>Keyboard shortcuts for window management.</li>
+                <li>Tracks open windows for taskbar integration.</li>
+            </ul>
+
+            <h3>10. <code>desktop.py</code></h3>
+            <p>Manages desktop icons for files and folders.</p>
+            <h4>Code:</h4>
+            <pre><code>import os
+import shutil
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDesktopWidget, QLabel, QMenu, QAction
+from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtGui import QPixmap, QIcon
+
+class Desktop(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnBottomHint)
+        self.setGeometry(QDesktopWidget().screenGeometry())
+        self.setStyleSheet("background: transparent;")
+
+        self.icons = []
+        self.load_desktop_items()
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_desktop_context_menu)
+
+    def load_desktop_items(self):
+        for icon in self.icons:
+            icon.deleteLater()
+        self.icons.clear()
+        desktop_path = os.path.expanduser("~/Desktop")
+        for item in os.listdir(desktop_path):
+            item_path = os.path.join(desktop_path, item)
+            icon = QLabel(self)
+            icon.setPixmap(QIcon.fromTheme("folder" if os.path.isdir(item_path) else "text-x-generic").pixmap(48, 48))
+            icon.setText(item)
+            icon.setAlignment(Qt.AlignCenter)
+            icon.setStyleSheet("color: white; font-size: 12px;")
+            icon.setGeometry(50 + len(self.icons) * 100, 50, 80, 80)
+            icon.setContextMenuPolicy(Qt.CustomContextMenu)
+            icon.customContextMenuRequested.connect(lambda pos, i=icon: self.show_context_menu(pos, i, item_path))
+            icon.mousePressEvent = lambda e, i=icon: self.start_drag(e, i)
+            self.icons.append(icon)
+
+    def show_context_menu(self, pos, icon, path):
+        menu = QMenu(self)
+        open_action = QAction("Open", self)
+        open_action.triggered.connect(lambda: os.system(f"xdg-open '{path}'"))
+        menu.addAction(open_action)
+        delete_action = QAction("Delete", self)
+        delete_action.triggered.connect(lambda: (shutil.rmtree(path) if os.path.isdir(path) else os.remove(path)) or self.load_desktop_items())
+        menu.addAction(delete_action)
+        menu.exec_(icon.mapToGlobal(pos))
+
+    def show_desktop_context_menu(self, pos):
+        menu = QMenu(self)
+        new_folder_action = QAction("New Folder", self)
+        new_folder_action.triggered.connect(self.create_new_folder)
+        menu.addAction(new_folder_action)
+        menu.exec_(self.mapToGlobal(pos))
+
+    def create_new_folder(self):
+        desktop_path = os.path.expanduser("~/Desktop")
+        base_name = "New Folder"
+        new_folder = os.path.join(desktop_path, base_name)
+        counter = 1
+        while os.path.exists(new_folder):
+            new_folder = os.path.join(desktop_path, f"{base_name} {counter}")
+            counter += 1
+        os.makedirs(new_folder)
+        self.load_desktop_items()
+
+    def start_drag(self, event, icon):
+        if event.buttons() == Qt.LeftButton:
+            self.drag_start_pos = event.pos()
+            self.dragged_icon = icon
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton and hasattr(self, "dragged_icon"):
+            delta = event.pos() - self.drag_start_pos
+            self.dragged_icon.move(self.dragged_icon.pos() + delta)
+
+    def mouseReleaseEvent(self, event):
+        self.dragged_icon = None
+
+def start_desktop():
+    app = QApplication([])
+    desktop = Desktop()
+    desktop.show()
+    app.exec_()
+</code></pre>
+            <h4>Classes and Functions:</h4>
+            <ul>
+                <li><strong><code>Desktop</code> Class</strong>:
+                    <ul>
+                        <li><code>__init__()</code>: Initializes the desktop window and loads icons.</li>
+                        <li><code>load_desktop_items()</code>: Loads files/folders from <code>~/Desktop</code> as icons.</li>
+                        <li><code>show_context_menu(pos, icon, path)</code>: Shows a context menu for an icon (Open, Delete).</li>
+                        <li><code>show_desktop_context_menu(pos)</code>: Shows a context menu for the desktop (New Folder).</li>
+                        <li><code>create_new_folder()</code>: Creates a new folder on the desktop.</li>
+                        <li><code>start_drag(event, icon)</code>: Starts dragging an icon.</li>
+                        <li><code>mouseMoveEvent(event)</code>: Handles icon dragging.</li>
+                        <li><code>mouseReleaseEvent(event)</code>: Ends icon dragging.</li>
+                    </ul>
+                </li>
+                <li><strong><code>start_desktop()</code></strong>: Entry point to launch the desktop.</li>
+            </ul>
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Displays desktop icons with drag-and-drop support.</li>
+                <li>Context menus for opening/deleting items and creating new folders.</li>
+            </ul>
+
+            <h3>11. <code>README.md</code></h3>
+            <p>Provides an overview of the project and usage instructions.</p>
+            <h4>Content:</h4>
+            <pre><code># Flow Desktop
+
+A lightweight, customizable desktop environment built with Python, PyQt5, and Xlib. Flow Desktop aims to provide a modern desktop experience similar to KDE Plasma, with features like desktop icons, a taskbar with app launcher, system tray, and window management.
+
+## Features
+- **Desktop Icons**: View and interact with files/folders on the desktop with drag-and-drop and context menus.
+- **Taskbar**: Includes an app launcher with search, window previews, and a system tray showing clock, battery, and network status.
+- **Window Management**: Supports window dragging, snapping (left/right), minimize (Alt+M), and maximize/restore (Alt+F).
+- **Settings App**: Customize wallpaper, taskbar position, theme colors, and manage taskbar apps.
+- **Cross-Platform Wallpaper**: Wallpaper support for Linux, Windows, and macOS.
+
+## Requirements
+- Python 3.x
+- PyQt5 (`
