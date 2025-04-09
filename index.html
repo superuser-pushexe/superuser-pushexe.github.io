@@ -16,378 +16,294 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background-color: #0a0f1f;
-            color: #e0e0e0;
+            background-color: #0d1117; /* GitHub's dark background */
+            color: #c9d1d9; /* GitHub's light text color */
             overflow-x: hidden;
         }
 
-        /* Navigation */
-        nav {
-            background: rgba(10, 15, 31, 0.95);
-            backdrop-filter: blur(12px);
+        a {
+            color: #58a6ff; /* GitHub's link color */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header (GitHub-style) */
+        header {
+            background-color: #161b22; /* GitHub header background */
+            border-bottom: 1px solid #30363d;
             padding: 1rem 2rem;
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
 
-        nav ul {
+        .header-logo img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .header-nav ul {
             list-style: none;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-            flex-wrap: wrap;
+            gap: 1.5rem;
         }
 
-        nav a {
-            color: #d0d0d0;
-            text-decoration: none;
+        .header-nav a {
+            color: #c9d1d9;
             font-weight: 500;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            color: #ffffff;
-            background: linear-gradient(90deg, #e94560, #ff6f91);
-            transform: scale(1.05);
+        .header-nav a:hover {
+            color: #58a6ff;
+            text-decoration: none;
         }
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: #e94560;
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
+        /* Hero Section (GitHub-style) */
         .hero {
-            background: linear-gradient(135deg, #1a2a6c 0%, #0d1b2a 100%);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f1f 0%, #1a2a6c 100%); /* Using Flow Desktop's blue tones */
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding: 4rem 2rem;
             position: relative;
-            overflow: hidden;
-            padding: 4rem 2rem; /* Increased padding to ensure space for logo */
-            padding-top: 6rem; /* Added extra padding-top to account for fixed nav */
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('logo.png') center center / 40% no-repeat;
-            opacity: 0.15;
-            z-index: 0;
         }
 
         .hero img {
             max-width: 200px;
-            width: 100%; /* Ensure the logo scales responsively */
-            height: auto; /* Maintain aspect ratio */
+            width: 100%;
+            height: auto;
             margin-bottom: 1.5rem;
-            z-index: 1;
-            animation: fadeIn 1s ease-in-out;
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 1rem;
-            z-index: 1;
-            animation: slideIn 1s ease-in-out;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 300;
-            color: #c0c0c0;
-            max-width: 600px;
-            z-index: 1;
-            animation: fadeIn 1.5s ease-in-out;
+            color: #c9d1d9;
+            max-width: 700px;
+            margin-bottom: 2rem;
         }
 
-        /* Main Content */
+        .hero .cta-button {
+            background-color: #238636; /* GitHub's green button */
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero .cta-button:hover {
+            background-color: #2ea043;
+            text-decoration: none;
+        }
+
+        /* Main Content (GitHub-style grid) */
         main {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 4rem 1rem;
         }
 
-        section {
+        .content-section {
             margin-bottom: 4rem;
-            background: rgba(20, 30, 60, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        section:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        h2 {
-            font-size: 2.5rem;
+        .content-section h2 {
+            font-size: 2rem;
             font-weight: 600;
-            color: #e94560;
+            color: #ffffff;
             margin-bottom: 1.5rem;
-            border-bottom: 3px solid #e94560;
+            border-bottom: 2px solid #30363d;
             padding-bottom: 0.5rem;
         }
 
-        h3 {
-            font-size: 1.8rem;
+        .content-section h3 {
+            font-size: 1.5rem;
             font-weight: 500;
             color: #ffffff;
             margin-top: 2rem;
             margin-bottom: 1rem;
         }
 
-        p {
+        .content-section p {
             margin-bottom: 1.2rem;
-            color: #c0c0c0;
+            color: #c9d1d9;
             font-weight: 300;
         }
 
-        ul, ol {
+        .content-section ul, .content-section ol {
             margin-left: 2rem;
             margin-bottom: 1.2rem;
         }
 
-        li {
+        .content-section li {
             margin-bottom: 0.8rem;
-            color: #c0c0c0;
+            color: #c9d1d9;
         }
 
-        code {
-            background-color: #1a2a6c;
+        .content-section code {
+            background-color: #21262d;
             padding: 0.3rem 0.6rem;
             border-radius: 6px;
             font-family: 'Courier New', monospace;
-            color: #e94560;
+            color: #f0f6fc;
             font-size: 0.95rem;
         }
 
-        pre {
-            background-color: #1a2a6c;
+        .content-section pre {
+            background-color: #21262d;
             padding: 1.5rem;
-            border-radius: 12px;
+            border-radius: 6px;
             overflow-x: auto;
             margin-bottom: 1.5rem;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+            border: 1px solid #30363d;
         }
 
-        pre code {
+        .content-section pre code {
             background: none;
             padding: 0;
-            color: #e0e0e0;
+            color: #f0f6fc;
         }
 
-        /* Footer */
+        /* Footer (GitHub-style) */
         footer {
-            background: linear-gradient(135deg, #1a2a6c 0%, #0d1b2a 100%);
+            background-color: #161b22;
+            border-top: 1px solid #30363d;
             padding: 3rem 1rem;
             text-align: center;
-            color: #e0e0e0;
-            border-top: 3px solid #e94560;
+            color: #c9d1d9;
         }
 
-        footer a {
-            color: #e94560;
-            text-decoration: none;
-            margin: 0 0.8rem;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: #ff6f91;
-        }
-
-        .social-links {
-            margin-top: 1.5rem;
+        footer p {
+            margin-bottom: 1rem;
         }
 
         .social-links a {
-            font-size: 1.8rem;
-            margin: 0 1.2rem;
-            transition: transform 0.3s ease;
+            color: #58a6ff;
+            margin: 0 1rem;
+            font-size: 1rem;
+            transition: color 0.3s ease;
         }
 
         .social-links a:hover {
-            transform: scale(1.2);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            color: #79c0ff;
+            text-decoration: none;
         }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
             .hero h1 {
-                font-size: 3rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            nav ul {
-                gap: 1.5rem;
-            }
-
-            nav a {
-                font-size: 0.95rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .hero img {
-                max-width: 180px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
                 font-size: 2.5rem;
             }
 
             .hero p {
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
 
-            nav {
-                padding: 1rem;
+            .header-nav ul {
+                gap: 1rem;
             }
+        }
 
-            nav ul {
+        @media (max-width: 768px) {
+            header {
                 flex-direction: column;
                 gap: 1rem;
             }
 
-            nav a {
-                font-size: 1rem;
-                padding: 0.5rem 1rem;
+            .header-nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
             }
 
-            main {
-                padding: 2rem 1rem;
-            }
-
-            section {
-                padding: 1.5rem;
-            }
-
-            h2 {
+            .hero h1 {
                 font-size: 2rem;
             }
 
-            h3 {
-                font-size: 1.5rem;
+            .hero p {
+                font-size: 1rem;
             }
 
             .hero img {
                 max-width: 150px;
             }
-
-            .hero {
-                padding-top: 8rem; /* Adjust for vertical nav */
-            }
         }
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
 
             .hero p {
                 font-size: 0.9rem;
-            }
-
-            nav a {
-                font-size: 0.9rem;
-            }
-
-            section {
-                padding: 1rem;
-            }
-
-            h2 {
-                font-size: 1.8rem;
-            }
-
-            h3 {
-                font-size: 1.3rem;
             }
 
             .hero img {
                 max-width: 120px;
             }
 
-            .hero {
-                padding-top: 10rem; /* Adjust for vertical nav */
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .content-section h3 {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#downloads">Downloads</a></li>
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#structure">Project Structure</a></li>
-            <li><a href="#dependencies">Dependencies</a></li>
-            <li><a href="#files">File Documentation</a></li>
-            <li><a href="#usage">Usage</a></li>
-            <li><a href="#limitations">Limitations</a></li>
-            <li><a href="#contributing">Contributing</a></li>
-        </ul>
-    </nav>
+    <header>
+        <div class="header-logo">
+            <img src="logo.png" alt="Flow Desktop Logo">
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#downloads">Downloads</a></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#structure">Project Structure</a></li>
+                <li><a href="#dependencies">Dependencies</a></li>
+                <li><a href="#files">File Documentation</a></li>
+                <li><a href="#usage">Usage</a></li>
+                <li><a href="#limitations">Limitations</a></li>
+                <li><a href="#contributing">Contributing</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <div class="hero">
+        <img src="logo.png" alt="Flow Desktop Logo">
         <h1>Flow Desktop</h1>
         <p>A Lightweight, Customizable Desktop Environment for Modern Workflows</p>
+        <a href="#downloads" class="cta-button">Get Started</a>
     </div>
 
     <main>
-        <section id="about">
+        <section id="about" class="content-section">
             <h2>About Flow Desktop</h2>
             <p>Welcome to <strong>Flow Desktop</strong>, a lightweight and highly customizable desktop environment designed to bring a modern, seamless user experience to your system. Built with Python, PyQt5, and Xlib, Flow Desktop is inspired by the elegance and functionality of KDE Plasma, but with a focus on minimal resource usage and maximum flexibility.</p>
             <p>Flow Desktop is perfect for users who want a clean, efficient, and visually appealing desktop environment that can be tailored to their needs. Whether you're a developer looking for a distraction-free workspace, a power user who needs quick access to applications, or someone who simply wants a beautiful desktop, Flow Desktop has something to offer.</p>
@@ -402,14 +318,14 @@
             <p>Whether you're setting up a new system, looking to replace your current desktop environment, or experimenting with a custom setup, Flow Desktop provides a fresh and intuitive experience that adapts to your workflow.</p>
         </section>
 
-        <section id="downloads">
+        <section id="downloads" class="content-section">
             <h2>Downloads</h2>
             <p>Ready to try Flow Desktop? You can download the latest version from our Google Drive folder:</p>
             <p><a href="https://drive.google.com/drive/folders/1nZ52rsDBNMB939QgHcruSetwIXxcikWI?usp=sharing" target="_blank">Download Flow Desktop</a></p>
             <p>Inside the folder, you'll find the source code, pre-built binaries (if available), and additional resources to help you get started. Be sure to check the <a href="#usage">Usage Instructions</a> section for installation steps.</p>
         </section>
 
-        <section id="overview">
+        <section id="overview" class="content-section">
             <h2>Project Overview</h2>
             <p><strong>Flow Desktop</strong> is a lightweight, customizable desktop environment built with Python, PyQt5, and Xlib. It provides a modern desktop experience with features like desktop icons, a taskbar with an app launcher, a system tray, window management, and a settings app. This documentation details the project structure, each file's purpose, and the functions within them.</p>
             <p>Flow Desktop aims to replicate the functionality of a modern desktop environment like KDE Plasma while remaining lightweight and modular. Key features include:</p>
@@ -422,7 +338,7 @@
             </ul>
         </section>
 
-        <section id="structure">
+        <section id="structure" class="content-section">
             <h2>Project Structure</h2>
             <p>The project consists of the following files:</p>
             <pre><code>flow/
@@ -440,7 +356,7 @@
 └── README.md         # Project documentation and usage instructions</code></pre>
         </section>
 
-        <section id="dependencies">
+        <section id="dependencies" class="content-section">
             <h2>Dependencies</h2>
             <ul>
                 <li><strong>Python 3.x</strong></li>
@@ -450,7 +366,7 @@
             </ul>
         </section>
 
-        <section id="files">
+        <section id="files" class="content-section">
             <h2>File-by-File Documentation</h2>
             <h3>1. <code>config.json</code></h3>
             <p>This JSON file stores the configuration for the desktop environment.</p>
@@ -478,7 +394,7 @@
             </ul>
         </section>
 
-        <section id="usage">
+        <section id="usage" class="content-section">
             <h2>Usage Instructions</h2>
             <p>Follow these steps to set up and use Flow Desktop on your system:</p>
             <h3>1. Installation</h3>
@@ -518,7 +434,7 @@
             <p>To stop Flow Desktop, close the terminal window where <code>main.py</code> is running, or press <code>Ctrl+C</code> in the terminal. This will terminate all components.</p>
         </section>
 
-        <section id="limitations">
+        <section id="limitations" class="content-section">
             <h2>Limitations</h2>
             <p>While Flow Desktop offers a modern and lightweight desktop experience, it has some limitations that users should be aware of:</p>
             <ul>
@@ -533,7 +449,7 @@
             <p>We are actively working on addressing these limitations in future updates. Contributions from the community are welcome to help improve Flow Desktop!</p>
         </section>
 
-        <section id="contributing">
+        <section id="contributing" class="content-section">
             <h2>Contributing to Flow Desktop</h2>
             <p>Flow Desktop is an open-source project, and we welcome contributions from the community! Whether you're a developer, designer, or user with ideas, there are many ways to get involved.</p>
             <h3>How to Contribute</h3>
@@ -576,8 +492,8 @@
         <div class="social-links">
             <a href="https://github.com/superuser-pushexe/flow" target="_blank">GitHub</a>
             <a href="https://discord.gg/x6w432yeTB" target="_blank">Discord</a>
+            <a href="/cdn-cgi/l/email-protection#0f697a636376616a7d696a6b4f626e6663696a616c6a216c6062">Contact Us</a>
         </div>
-        <p><a href="/cdn-cgi/l/email-protection#0f697a636376616a7d696a6b4f626e6663696a616c6a216c6062">Contact Us</a></p>
     </footer>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92d51a19fbd0e590',t:'MTc0NDE1MDMwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
