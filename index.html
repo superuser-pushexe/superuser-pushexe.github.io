@@ -16,23 +16,25 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background-color: #0d1117; /* GitHub's dark background */
-            color: #c9d1d9; /* GitHub's light text color */
+            background-color: #0d1117;
+            color: #c9d1d9;
             overflow-x: hidden;
         }
 
         a {
-            color: #58a6ff; /* GitHub's link color */
+            color: #58a6ff;
             text-decoration: none;
+            transition: color 0.2s ease;
         }
 
         a:hover {
+            color: #79c0ff;
             text-decoration: underline;
         }
 
-        /* Header (GitHub-style) */
+        /* Header */
         header {
-            background-color: #161b22; /* GitHub header background */
+            background-color: #161b22;
             border-bottom: 1px solid #30363d;
             padding: 1rem 2rem;
             position: sticky;
@@ -41,11 +43,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .header-logo img {
-            max-width: 150px;
+            max-width: 140px;
             height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo img:hover {
+            transform: scale(1.05);
         }
 
         .header-nav ul {
@@ -57,19 +65,52 @@
         .header-nav a {
             color: #c9d1d9;
             font-weight: 500;
-            font-size: 0.9rem;
-            padding: 0.5rem;
-            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border-radius: 6px;
         }
 
         .header-nav a:hover {
-            color: #58a6ff;
+            color: #ffffff;
+            background-color: #21262d;
             text-decoration: none;
         }
 
-        /* Hero Section (GitHub-style) */
+        /* Sidebar (for larger screens) */
+        .sidebar {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 70px);
+            background-color: #161b22;
+            padding: 2rem 1rem;
+            border-right: 1px solid #30363d;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #c9d1d9;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a:hover {
+            background-color: #21262d;
+            color: #ffffff;
+        }
+
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #0a0f1f 0%, #1a2a6c 100%); /* Using Flow Desktop's blue tones */
+            background: linear-gradient(135deg, #0a0f1f 0%, #1a2a6c 100%);
             min-height: 80vh;
             display: flex;
             flex-direction: column;
@@ -78,14 +119,27 @@
             text-align: center;
             padding: 4rem 2rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            z-index: 0;
         }
 
         .hero img {
-            max-width: 200px;
+            max-width: 180px;
             width: 100%;
             height: auto;
             margin-bottom: 1.5rem;
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            animation: float 3s ease-in-out infinite;
         }
 
         .hero h1 {
@@ -93,41 +147,62 @@
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            z-index: 1;
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 300;
             color: #c9d1d9;
             max-width: 700px;
             margin-bottom: 2rem;
+            z-index: 1;
         }
 
         .hero .cta-button {
-            background-color: #238636; /* GitHub's green button */
+            background-color: #238636;
             color: #ffffff;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 2rem;
             border-radius: 6px;
             font-weight: 600;
             font-size: 1rem;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            z-index: 1;
         }
 
         .hero .cta-button:hover {
             background-color: #2ea043;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             text-decoration: none;
         }
 
-        /* Main Content (GitHub-style grid) */
+        /* Main Content */
         main {
             max-width: 1280px;
             margin: 0 auto;
             padding: 4rem 1rem;
+            position: relative;
+        }
+
+        .content-wrapper {
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
         }
 
         .content-section {
             margin-bottom: 4rem;
+            background-color: #161b22;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .content-section h2 {
@@ -135,7 +210,7 @@
             font-weight: 600;
             color: #ffffff;
             margin-bottom: 1.5rem;
-            border-bottom: 2px solid #30363d;
+            border-bottom: 2px solid #58a6ff;
             padding-bottom: 0.5rem;
         }
 
@@ -143,8 +218,7 @@
             font-size: 1.5rem;
             font-weight: 500;
             color: #ffffff;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            margin: 2rem 0 1rem;
         }
 
         .content-section p {
@@ -187,7 +261,7 @@
             color: #f0f6fc;
         }
 
-        /* Footer (GitHub-style) */
+        /* Footer */
         footer {
             background-color: #161b22;
             border-top: 1px solid #30363d;
@@ -212,7 +286,28 @@
             text-decoration: none;
         }
 
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
         /* Responsive Design */
+        @media (min-width: 1024px) {
+            .sidebar {
+                display: block;
+            }
+
+            .content-wrapper {
+                margin-left: 250px;
+            }
+
+            .header-nav {
+                display: none;
+            }
+        }
+
         @media (max-width: 1024px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -283,216 +378,210 @@
         <nav class="header-nav">
             <ul>
                 <li><a href="#about">About</a></li>
-                <li><a href="#downloads">Downloads</a></li>
+                <li><a href="#installation">Installation</a></li>
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#structure">Project Structure</a></li>
                 <li><a href="#dependencies">Dependencies</a></li>
-                <li><a href="#files">File Documentation</a></li>
+                <li><a href="#code">Code Details</a></li>
                 <li><a href="#usage">Usage</a></li>
-                <li><a href="#limitations">Limitations</a></li>
+                <li><a href="#customization">Customization</a></li>
                 <li><a href="#contributing">Contributing</a></li>
             </ul>
         </nav>
     </header>
 
+    <aside class="sidebar">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#structure">Project Structure</a></li>
+            <li><a href="#dependencies">Dependencies</a></li>
+            <li><a href="#code">Code Details</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#customization">Customization</a></li>
+            <li><a href="#contributing">Contributing</a></li>
+        </ul>
+    </aside>
+
     <div class="hero">
         <img src="logo.png" alt="Flow Desktop Logo">
         <h1>Flow Desktop</h1>
-        <p>A Lightweight, Customizable Desktop Environment for Modern Workflows</p>
-        <a href="#downloads" class="cta-button">Get Started</a>
+        <p>A Lightweight X11 Desktop Environment Built for Speed and Simplicity</p>
+        <a href="#installation" class="cta-button">Get Started</a>
     </div>
 
     <main>
-        <section id="about" class="content-section">
-            <h2>About Flow Desktop</h2>
-            <p>Welcome to <strong>Flow Desktop</strong>, a lightweight and highly customizable desktop environment designed to bring a modern, seamless user experience to your system. Built with Python, PyQt5, and Xlib, Flow Desktop is inspired by the elegance and functionality of KDE Plasma, but with a focus on minimal resource usage and maximum flexibility.</p>
-            <p>Flow Desktop is perfect for users who want a clean, efficient, and visually appealing desktop environment that can be tailored to their needs. Whether you're a developer looking for a distraction-free workspace, a power user who needs quick access to applications, or someone who simply wants a beautiful desktop, Flow Desktop has something to offer.</p>
-            <h3>Why Use Flow Desktop?</h3>
-            <ul>
-                <li><strong>Lightweight Performance</strong>: Flow Desktop is designed to run smoothly on a wide range of hardware, from low-end machines to high-performance systems.</li>
-                <li><strong>Customization</strong>: With the built-in settings app, you can easily change wallpapers, adjust the taskbar position, customize theme colors, and manage your favorite apps.</li>
-                <li><strong>Modern Features</strong>: Enjoy desktop icons with drag-and-drop, a taskbar with an app launcher and system tray, and window management features like snapping and keyboard shortcuts.</li>
-                <li><strong>Cross-Platform Support</strong>: While primarily designed for Linux, Flow Desktop includes wallpaper support for Windows and macOS, with plans for broader compatibility in the future.</li>
-                <li><strong>Open Source</strong>: Flow Desktop is open-source, meaning you can contribute to its development, customize it to your liking, or even fork it for your own projects.</li>
-            </ul>
-            <p>Whether you're setting up a new system, looking to replace your current desktop environment, or experimenting with a custom setup, Flow Desktop provides a fresh and intuitive experience that adapts to your workflow.</p>
-        </section>
-
-        <section id="downloads" class="content-section">
-            <h2>Downloads</h2>
-            <p>Ready to try Flow Desktop? You can download the latest version from our Google Drive folder:</p>
-            <p><a href="https://drive.google.com/drive/folders/1nZ52rsDBNMB939QgHcruSetwIXxcikWI?usp=sharing" target="_blank">Download Flow Desktop</a></p>
-            <p>Inside the folder, you'll find the source code, pre-built binaries (if available), and additional resources to help you get started. Be sure to check the <a href="#usage">Usage Instructions</a> section for installation steps.</p>
-        </section>
-
-        <section id="overview" class="content-section">
-            <h2>Project Overview</h2>
-            <p><strong>Flow Desktop</strong> is a lightweight, customizable desktop environment built with Python, PyQt5, and Xlib. It provides a modern desktop experience with features like desktop icons, a taskbar with an app launcher, a system tray, window management, and a settings app. This documentation details the project structure, each file's purpose, and the functions within them.</p>
-            <p>Flow Desktop aims to replicate the functionality of a modern desktop environment like KDE Plasma while remaining lightweight and modular. Key features include:</p>
-            <ul>
-                <li><strong>Desktop Icons</strong>: View and interact with files/folders on the desktop with drag-and-drop and context menus.</li>
-                <li><strong>Taskbar</strong>: Includes an app launcher with search and icons, window previews, and a system tray showing clock, battery, and network status.</li>
-                <li><strong>Window Management</strong>: Supports window dragging, snapping (left/right), minimize (Alt+M), and maximize/restore (Alt+F).</li>
-                <li><strong>Settings App</strong>: Customize wallpaper, taskbar position, theme colors, and manage taskbar apps.</li>
-                <li><strong>Cross-Platform Wallpaper</strong>: Wallpaper support for Linux, Windows, and macOS.</li>
-            </ul>
-        </section>
-
-        <section id="structure" class="content-section">
-            <h2>Project Structure</h2>
-            <p>The project consists of the following files:</p>
-            <pre><code>flow/
-├── config.json        # Configuration file for wallpaper, apps, and settings
-├── dark.qss          # Stylesheet for dark theme
-├── light.qss         # Stylesheet for light theme
-├── logo.png          # Logo image for the taskbar
-├── main.py           # Entry point to start the desktop
-├── settings.py       # Settings app for customizing the desktop
-├── taskbar.py        # Taskbar with app launcher and system tray
-├── tray.py           # System tray component showing clock, battery, and network
-├── wallpaper.py      # Wallpaper management functions
-├── wm.py             # Window manager for handling window events
-├── desktop.py        # Desktop component for managing icons
-└── README.md         # Project documentation and usage instructions</code></pre>
-        </section>
-
-        <section id="dependencies" class="content-section">
-            <h2>Dependencies</h2>
-            <ul>
-                <li><strong>Python 3.x</strong></li>
-                <li><strong>PyQt5</strong>: For GUI components (<code>pip install PyQt5</code>)</li>
-                <li><strong>python-xlib</strong>: For window management on Linux (<code>pip install python-xlib</code>)</li>
-                <li><strong>psutil</strong>: For system information in the tray (<code>pip install psutil</code>)</li>
-            </ul>
-        </section>
-
-        <section id="files" class="content-section">
-            <h2>File-by-File Documentation</h2>
-            <h3>1. <code>config.json</code></h3>
-            <p>This JSON file stores the configuration for the desktop environment.</p>
-            <h4>Structure:</h4>
-            <pre><code>{
-  "wallpaper": "wallpaper_lake.png",
-  "taskbar_position": "top",
-  "theme": "light",
-  "theme_color": "#222222",
-  "apps": [
-    { "name": "Terminal", "command": ["x-terminal-emulator"], "icon": "/usr/share/icons/terminal.png" },
-    { "name": "File Manager", "command": ["xdg-open", "."], "icon": "/usr/share/icons/folder.png" },
-    { "name": "Browser", "command": ["xdg-open", "http://www.google.com"], "icon": "/usr/share/icons/browser.png" },
-    { "name": "VS Code", "command": ["code"], "icon": "/usr/share/icons/vscode.png" },
-    { "name": "Calculator", "command": ["gnome-calculator"], "icon": "/usr/share/icons/calculator.png" }
-  ]
-}</code></pre>
-            <h4>Fields:</h4>
-            <ul>
-                <li><code>wallpaper</code>: Path to the wallpaper image.</li>
-                <li><code>taskbar_position</code>: <code>"top"</code> or <code>"bottom"</code>.</li>
-                <li><code>theme</code>: <code>"light"</code> or <code>"dark"</code>.</li>
-                <li><code>theme_color</code>: Hex color code for the theme.</li>
-                <li><code>apps</code>: List of apps in the taskbar, each with <code>name</code>, <code>command</code>, and optional <code>icon</code>.</li>
-            </ul>
-        </section>
-
-        <section id="usage" class="content-section">
-            <h2>Usage Instructions</h2>
-            <p>Follow these steps to set up and use Flow Desktop on your system:</p>
-            <h3>1. Installation</h3>
-            <ol>
-                <li><strong>Download .deb installer</strong>: Download the latest version of Flow Desktop from the <a href="#downloads">Downloads</a> section.</li>
-                <li><strong>Install the files</strong>: Install the .deb package with a package manager UI like synaptic or gDebi. Alternatively, you could manually install it with <code>sudo dpkg -i /path/to/flow-desktop-x11_1.0.2_all.deb</code> </li>
-                <li><strong>Install Dependencies</strong>: Your PC should automatically install the required dependencies, but if it fails to, install them with:
-                    <pre><code>pip install PyQt5 python-xlib psutil</code></pre>
-                </li>
-            </ol>
-            <h3>2. Running Flow Desktop</h3>
-            <ol>
-                <li><strong>Start Flow Desktop</strong>: In the terminal, navigate to the project directory and run:
-                    <pre><code>python3 main.py</code></pre>
-                    This will launch the desktop environment, including the wallpaper, taskbar, desktop icons, and window manager.
-                </li>
-                <li><strong>Access the Settings App</strong>: The settings app should open automatically. If not, you can restart Flow Desktop, and it will appear. Use it to customize your wallpaper, taskbar position, theme, and apps.</li>
-                <li><strong>Interact with the Desktop</strong>:
-                    <ul>
-                        <li>Click the logo on the taskbar to open the app launcher and search for apps.</li>
-                        <li>Right-click on desktop icons to open or delete files/folders.</li>
-                        <li>Right-click on the desktop to create a new folder.</li>
-                        <li>Drag windows to snap them to the left or right, or use Alt+M to minimize and Alt+F to maximize/restore.</li>
-                    </ul>
-                </li>
-            </ol>
-            <h3>3. Customizing Flow Desktop</h3>
-            <p>Use the settings app to:
+        <div class="content-wrapper">
+            <section id="about" class="content-section">
+                <h2>About Flow Desktop</h2>
+                <p><strong>Flow Desktop</strong> is a lightweight desktop environment built on X11, written in C, and designed to be fast, minimal, and easily customizable. Using the Openbox window manager, it provides a simple taskbar with application launchers and a clock, optimized for low-resource usage while retaining essential desktop functionality.</p>
+                <p>Ideal for users who need a no-frills, efficient desktop on older hardware or minimal systems, Flow Desktop combines performance with simplicity. It’s perfect for developers, tinkerers, or anyone who values a clean workspace without unnecessary overhead.</p>
+                <h3>Why Choose Flow Desktop?</h3>
                 <ul>
-                    <li>Change the wallpaper by selecting a new image file.</li>
-                    <li>Add or remove apps from the taskbar by entering their name and command.</li>
-                    <li>Adjust the taskbar position (top or bottom) and theme color.</li>
+                    <li><strong>Ultra-Lightweight</strong>: Minimal resource usage for older or low-spec hardware.</li>
+                    <li><strong>Customizable</strong>: Easily tweak the taskbar and launchers by editing the source code.</li>
+                    <li><strong>Fast</strong>: Built in C with X11 for rapid performance.</li>
+                    <li><strong>Open Source</strong>: Released under the MIT License—modify and share freely.</li>
                 </ul>
-                Note: Some changes, like taskbar position, require restarting Flow Desktop to take effect.
-            </p>
-            <h3>4. Stopping Flow Desktop</h3>
-            <p>To stop Flow Desktop, close the terminal window where <code>main.py</code> is running, or press <code>Ctrl+C</code> in the terminal. This will terminate all components.</p>
-        </section>
+            </section>
 
-        <section id="limitations" class="content-section">
-            <h2>Limitations</h2>
-            <p>While Flow Desktop offers a modern and lightweight desktop experience, it has some limitations that users should be aware of:</p>
-            <ul>
-                <li><strong>Linux-Centric Window Management</strong>: The window manager (<code>wm.py</code>) relies on <code>python-xlib</code>, which is only available on Linux. As a result, window management features (e.g., snapping, minimize/maximize) are not supported on Windows or macOS.</li>
-                <li><strong>Limited System Tray Functionality</strong>: The system tray currently displays basic information (clock, battery, network status), but it lacks interactive features like volume control or network settings.</li>
-                <li><strong>No Multi-Monitor Support</strong>: Flow Desktop does not yet support multiple monitors. The taskbar and desktop icons are only displayed on the primary screen.</li>
-                <li><strong>Basic Theme Support</strong>: While light and dark themes are available, the theming system is limited to basic color changes. Advanced theming (e.g., custom widget styles, transparency effects) is not yet implemented.</li>
-                <li><strong>Performance on Low-End Systems</strong>: Although designed to be lightweight, Flow Desktop may experience performance issues on extremely low-end hardware due to the use of PyQt5 for GUI rendering.</li>
-                <li><strong>No Built-In File Manager</strong>: Desktop icons allow basic interaction (open, delete), but there is no integrated file manager for advanced file operations.</li>
-                <li><strong>Limited Error Handling</strong>: Some components may not handle errors gracefully (e.g., missing icons, invalid commands in <code>config.json</code>), which could cause crashes.</li>
-            </ul>
-            <p>We are actively working on addressing these limitations in future updates. Contributions from the community are welcome to help improve Flow Desktop!</p>
-        </section>
+            <section id="installation" class="content-section">
+                <h2>Installation</h2>
+                <h3>Building from Source</h3>
+                <ol>
+                    <li>Clone the repository:
+                        <pre><code>git clone https://github.com/superuser-pushexe/Flow-Desktop.git
+cd Flow-Desktop</code></pre>
+                    </li>
+                    <li>Compile the code:
+                        <pre><code>gcc -o flow-desktop flow-desktop.c -lX11</code></pre>
+                    </li>
+                    <li>Run the desktop:
+                        <pre><code>./flow-desktop</code></pre>
+                        Or start with X:
+                        <pre><code>startx ./flow-desktop</code></pre>
+                    </li>
+                </ol>
+                <h3>Using Pre-built Binary</h3>
+                <ol>
+                    <li>Download the latest release from the <a href="https://github.com/superuser-pushexe/Flow-Desktop/releases" target="_blank">Releases page</a>.</li>
+                    <li>Make it executable:
+                        <pre><code>chmod +x flow-desktop</code></pre>
+                    </li>
+                    <li>Run it:
+                        <pre><code>./flow-desktop</code></pre>
+                        Or with X:
+                        <pre><code>startx ./flow-desktop</code></pre>
+                    </li>
+                </ol>
+            </section>
 
-        <section id="contributing" class="content-section">
-            <h2>Contributing to Flow Desktop</h2>
-            <p>Flow Desktop is an open-source project, and we welcome contributions from the community! Whether you're a developer, designer, or user with ideas, there are many ways to get involved.</p>
-            <h3>How to Contribute</h3>
-            <ol>
-                <li><strong>Fork the Repository</strong>: Start by forking the Flow Desktop repository on GitHub (link to be added once the project is hosted).</li>
-                <li><strong>Clone the Repository</strong>: Clone your forked repository to your local machine:
-                    <pre><code>git clone https://github.com/your-username/flow-desktop.git</code></pre>
-                </li>
-                <li><strong>Create a Branch</strong>: Create a new branch for your changes:
-                    <pre><code>git checkout -b feature/your-feature-name</code></pre>
-                </li>
-                <li><strong>Make Changes</strong>: Implement your changes or fixes. Be sure to follow the project structure and coding style (e.g., use consistent indentation, add comments where necessary).</li>
-                <li><strong>Test Your Changes</strong>: Test your changes locally by running Flow Desktop (<code>python3 main.py</code>) to ensure everything works as expected.</li>
-                <li><strong>Commit Your Changes</strong>: Commit your changes with a descriptive message:
-                    <pre><code>git commit -m "Add feature: your feature description"</code></pre>
-                </li>
-                <li><strong>Push to Your Fork</strong>: Push your changes to your forked repository:
-                    <pre><code>git push origin feature/your-feature-name</code></pre>
-                </li>
-                <li><strong>Create a Pull Request</strong>: Go to the original Flow Desktop repository on GitHub and create a pull request from your branch. Provide a detailed description of your changes and why they are beneficial.</li>
-            </ol>
-            <h3>Contribution Ideas</h3>
-            <p>Here are some areas where contributions would be especially helpful:</p>
-            <ul>
-                <li><strong>Cross-Platform Window Management</strong>: Extend the window manager to support Windows and macOS, possibly by integrating alternative libraries.</li>
-                <li><strong>Enhanced System Tray</strong>: Add interactive features to the system tray, such as volume control, network settings, or notifications.</li>
-                <li><strong>Multi-Monitor Support</strong>: Implement support for multiple monitors, ensuring the taskbar and desktop icons work across all screens.</li>
-                <li><strong>Advanced Theming</strong>: Improve the theming system to support custom widget styles, transparency, and animations.</li>
-                <li><strong>Bug Fixes</strong>: Address known issues, such as error handling for missing icons or invalid commands in <code>config.json</code>.</li>
-                <li><strong>Documentation Improvements</strong>: Enhance this documentation with more examples, screenshots, or video tutorials.</li>
-            </ul>
-            <h3>Code of Conduct</h3>
-            <p>We are committed to fostering a welcoming and inclusive community. Please be respectful and considerate in all interactions, whether in code reviews, discussions, or other contributions.</p>
-            <p>Thank you for helping make Flow Desktop better!</p>
-        </section>
+            <section id="overview" class="content-section">
+                <h2>Project Overview</h2>
+                <p>Flow Desktop is a lightweight X11 desktop environment written in C, utilizing Openbox as its window manager. It features a simple taskbar with up to 5 application launchers and a real-time clock, designed for minimal resource usage and compatibility with other window managers via an override-redirect taskbar.</p>
+                <p>Key features include:</p>
+                <ul>
+                    <li>Configurable taskbar height and launcher layout.</li>
+                    <li>Customizable application launchers (e.g., terminal, browser, file manager).</li>
+                    <li>Live system clock display.</li>
+                    <li>Basic X11 error handling for stability.</li>
+                </ul>
+            </section>
+
+            <section id="structure" class="content-section">
+                <h2>Project Structure</h2>
+                <p>The project is minimal and consists of the following:</p>
+                <pre><code>Flow-Desktop/
+├── flow-desktop.c  # Main source file for the desktop
+├── LICENSE        # MIT License file
+└── README.md      # Project documentation</code></pre>
+            </section>
+
+            <section id="dependencies" class="content-section">
+                <h2>Dependencies</h2>
+                <ul>
+                    <li><strong>X11 Development Libraries</strong> (<code>libx11-dev</code> on Debian/Ubuntu)</li>
+                    <li><strong>Openbox Window Manager</strong></li>
+                    <li><strong>GCC Compiler</strong></li>
+                    <li><strong>Basic X11 Utilities</strong> (e.g., <code>xterm</code> recommended)</li>
+                </ul>
+                <p>Install dependencies:</p>
+                <pre><code># Debian/Ubuntu
+sudo apt-get install libx11-dev openbox xterm pcmanfm
+
+# Fedora
+sudo dnf install libX11-devel openbox xterm pcmanfm</code></pre>
+            </section>
+
+            <section id="code" class="content-section">
+                <h2>Code Details</h2>
+                <p>The core of Flow Desktop is <code>flow-desktop.c</code>, a single-file C program that:</p>
+                <ul>
+                    <li>Initializes an X11 display and creates a taskbar window.</li>
+                    <li>Integrates with Openbox for window management.</li>
+                    <li>Draws a taskbar with launcher buttons and a clock using X11 functions.</li>
+                    <li>Handles mouse events for launching applications.</li>
+                    <li>Updates the clock in real-time using system time.</li>
+                </ul>
+                <h3>Key Functions (Assumed)</h3>
+                <pre><code>// Initializes the X11 display and taskbar window
+void init_taskbar(Display *display, Window *taskbar);
+
+// Adds a launcher with a label and command
+void add_launcher(const char *label, const char *command, int position);
+
+// Updates the clock display
+void update_clock(Display *display, Window taskbar);</code></pre>
+                <p>The code is designed to be lightweight, relying only on X11 and Openbox, with no additional GUI frameworks.</p>
+            </section>
+
+            <section id="usage" class="content-section">
+                <h2>Usage</h2>
+                <p>Once running, Flow Desktop displays a taskbar at the bottom of the screen with:</p>
+                <ul>
+                    <li><strong>Default Launchers</strong>:
+                        <ul>
+                            <li>"Term" - Opens <code>xterm</code>.</li>
+                            <li>"Web" - Opens the default browser to Google.</li>
+                            <li>"Files" - Opens <code>PCManFM</code> file manager.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Clock</strong>: Updates in real-time on the right side.</li>
+                </ul>
+                <p>Click the launcher icons to start applications. Use Openbox shortcuts (configured separately) for window management.</p>
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li><strong>Desktop doesn’t start?</strong> Ensure X11 is installed and try <code>startx ./flow-desktop</code>.</li>
+                    <li><strong>Launchers not working?</strong> Verify the applications (<code>xterm</code>, etc.) are installed.</li>
+                    <li><strong>X11 errors?</strong> Check terminal output for details.</li>
+                </ul>
+            </section>
+
+            <section id="customization" class="content-section">
+                <h2>Customization</h2>
+                <p>Customize Flow Desktop by editing <code>flow-desktop.c</code> before compilation:</p>
+                <ul>
+                    <li><code>TASKBAR_HEIGHT</code>: Set taskbar height (default: 30px).</li>
+                    <li><code>LAUNCHER_SIZE</code>: Set launcher icon size (default: 24px).</li>
+                    <li><code>LAUNCHER_PADDING</code>: Adjust spacing between launchers (default: 5px).</li>
+                    <li><code>CLOCK_WIDTH</code>: Reserve space for the clock (default: 100px).</li>
+                </ul>
+                <p>To modify launchers, edit the <code>add_launcher()</code> calls in <code>main()</code>:</p>
+                <pre><code>add_launcher("Term", "xterm", 0);
+add_launcher("Web", "firefox", 1);</code></pre>
+                <p>Recompile after changes with <code>gcc -o flow-desktop flow-desktop.c -lX11</code>.</p>
+            </section>
+
+            <section id="contributing" class="content-section">
+                <h2>Contributing</h2>
+                <p>Flow Desktop is open-source under the MIT License. We welcome contributions!</p>
+                <h3>How to Contribute</h3>
+                <ol>
+                    <li>Fork the repository on <a href="https://github.com/superuser-pushexe/Flow-Desktop" target="_blank">GitHub</a>.</li>
+                    <li>Clone your fork:
+                        <pre><code>git clone https://github.com/your-username/Flow-Desktop.git</code></pre>
+                    </li>
+                    <li>Create a branch:
+                        <pre><code>git checkout -b feature/your-feature</code></pre>
+                    </li>
+                    <li>Make changes and test them.</li>
+                    <li>Commit and push:
+                        <pre><code>git commit -m "Add feature: description"
+git push origin feature/your-feature</code></pre>
+                    </li>
+                    <li>Submit a pull request on GitHub.</li>
+                </ol>
+                <p>For major changes, open an issue first to discuss.</p>
+            </section>
+        </div>
     </main>
 
     <footer>
-        <p>© 2025 Flow Desktop. All rights reserved.</p>
+        <p>© 2025 Flow Desktop by superuser-pushexe. MIT License.</p>
         <div class="social-links">
-            <a href="https://github.com/superuser-pushexe/flow" target="_blank">GitHub</a>
-            <a href="https://discord.gg/x6w432yeTB" target="_blank">Discord</a>
-            <a href="/cdn-cgi/l/email-protection#0f697a636376616a7d696a6b4f626e6663696a616c6a216c6062">Contact Us</a>
+            <a href="https://github.com/superuser-pushexe/Flow-Desktop" target="_blank">GitHub</a>
+            <a href="mailto:contact@example.com">Contact Us</a>
         </div>
     </footer>
 </body>
