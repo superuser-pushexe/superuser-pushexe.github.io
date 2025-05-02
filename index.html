@@ -21,7 +21,7 @@
                     <div className="p-6">
                         <h2 className="text-2xl font-bold mb-6">Flow Desktop</h2>
                         <ul className="space-y-2">
-                            {['About', 'Features', 'Installation', 'Usage', 'Customization', 'Contributing'].map((item) => (
+                            {['About', 'Features', 'Installation', 'Usage', 'Customization', 'Documentation', 'Contributing'].map((item) => (
                                 <li key={item}>
                                     <a
                                         href={`#${item.toLowerCase()}`}
@@ -96,11 +96,12 @@
                             </p>
                             <p className="mb-4">
                                 Perfect for low-resource systems or users who love a clean desktop, Flow Desktop combines performance with modern features. Whether you're a developer or a minimalist, Flow Desktop provides a fast, customizable workspace.
+                            </chaften: Flow Desktop aims to provide a modern desktop experience similar to KDE Plasma, with features like desktop icons, a taskbar with app launcher, system tray, and window management.[](https://github.com/superuser-pushexe/flow)
                             </p>
                             <h3 className="text-xl font-semibold text-white mt-6 mb-4">Why Choose Flow Desktop?</h3>
                             <ul className="list-disc list-inside space-y-2">
                                 <li><strong>Ultra-Lightweight</strong>: Minimal resource usage for older hardware.</li>
- modos                                 <li><strong>Modern</strong>: Built with XCB, GTK4, and secure libraries like libgit2.</li>
+                                <li><strong>Modern</strong>: Built with XCB, GTK4, and secure libraries like libgit2.</li>
                                 <li><strong>Customizable</strong>: Tweak the taskbar, launchers, and UI via source code.</li>
                                 <li><strong>Open Source</strong>: Licensed under GPL v3.0—modify and share freely.</li>
                             </ul>
@@ -175,6 +176,45 @@ meson setup ..</code>
                                 <code>cd build
 ninja</code>
                             </pre>
+                        </Section>
+
+                        <Section id="documentation" title="Documentation">
+                            <p className="mb-4">
+                                The <strong>Flow Desktop</strong> codebase is designed for simplicity and extensibility, primarily written in C using XCB for X11 interactions and GTK4 for graphical components. Below is an overview of the code structure and key components to help developers understand and contribute to the project.
+                            </p>
+                            <h3 className="text-xl font-semibold text-white mt-6 mb-4">Code Structure</h3>
+                            <ul className="list-disc list-inside space-y-2">
+                                <li><strong><code>src/</code></strong>: Contains the core source files for the desktop environment.</li>
+                                <li><strong><code>src/flow.c</code></strong>: Implements the taskbar, including app menu, system tray, and clock, using XCB for rendering and event handling.</li>
+                                <li><strong><code>src/flow-settings.c</code></strong>: Defines the GTK4-based settings interface for wallpaper and system configuration.</li>
+                                <li><strong><code>src/flow-builder.c</code></strong>: Provides the Flow Builder IDE with a code editor and terminal, leveraging GTK4 and libgit2 for Git integration.</li>
+                                <li><strong><code>meson.build</code></strong>: Meson build configuration file specifying dependencies (e.g., XCB, GTK4, libgit2) and build instructions.</li>
+                            </ul>
+                            <h3 className="text-xl font-semibold text-white mt-6 mb-4">Key Components</h3>
+                            <ul className="list-disc list-inside space-y-2">
+                                <li><strong>Taskbar</strong>: Built with XCB, it uses <code>XDG_DATA_DIRS</code> to load application <code>.desktop</code> files via GDesktopAppInfo. Customize dimensions in <code>flow.c</code> (e.g., <code>WIDTH_RATIO</code>, <code>HEIGHT</code>).</li>
+                                <li><strong>Settings UI</strong>: A GTK4 application with tabs for system settings. Extend functionality by adding new tabs in <code>flow-settings.c</code>.</li>
+                                <li><strong>Flow Builder</strong>: A developer-focused IDE with GTK4’s text view for editing and a terminal for commands. Git support is enabled via libgit2.</li>
+                                <li><strong>Window Management</strong>: Integrates with Openbox for window dragging, snapping, minimizing (Alt+M), and maximizing (Alt+F).</li>
+                            </ul>
+                            <h3 className="text-xl font-semibold text-white mt-6 mb-4">Working with the Code</h3>
+                            <p className="mb-4">To dive into the codebase:</p>
+                            <ol className="list-decimal list-inside space-y-4">
+                                <li>Install dependencies: Ensure <code>xcb</code>, <code>gtk4</code>, <code>libgit2</code>, and <code>meson</code> are installed.</li>
+                                <li>Build the project:
+                                    <pre className="bg-gray-900 p-4 rounded-lg text-sm overflow-x-auto">
+                                        <code>cd Flow-Desktop
+mkdir build && cd build
+meson setup ..
+ninja</code>
+                                    </pre>
+                                </li>
+                                <li>Explore <code>src/</code> to modify components. For example, adjust taskbar behavior in <code>flow.c</code> or add settings in <code>flow-settings.c</code>.</li>
+                                <li>Test changes by running <code>./flow</code>, <code>./flow-settings</code>, or <code>./flow-builder</code> from the build directory.</li>
+                            </ol>
+                            <p className="mt-4">
+                                For detailed API documentation, refer to the <a href="https://xcb.freedesktop.org/" className="text-blue-400 hover:underline">XCB documentation</a> and <a href="https://docs.gtk.org/gtk4/" className="text-blue-400 hover:underline">GTK4 documentation</a>. Contribute improvements via GitHub pull requests, following the guidelines in the Contributing section.
+                            </p>
                         </Section>
 
                         <Section id="contributing" title="Contributing">
