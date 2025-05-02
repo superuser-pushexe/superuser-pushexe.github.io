@@ -15,20 +15,34 @@
     <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
 
     <script type="text/babel">
-        function Sidebar({ isOpen, toggleSidebar }) {
+        function Sidebar({ isOpen, toggleSidebar, isCompact, toggleCompact }) {
             return (
-                <aside className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 z-20`}>
-                    <div className="p-6">
-                        <h2 className="text-2xl font-bold mb-6">Flow Desktop</h2>
-                        <ul className="space-y-2">
+                <aside className={`fixed top-0 left-0 h-full ${isCompact ? 'w-20' : 'w-64'} bg-gray-900 text-white transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-all duration-300 z-20`}>
+                    <div className="p-4 flex flex-col h-full">
+                        <div className="flex items-center justify-between mb-6">
+                            {!isCompact && (
+                                <h2 className="text-2xl font-bold">Flow Desktop</h2>
+                            )}
+                            <button
+                                onClick={toggleCompact}
+                                className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+                                title={isCompact ? 'Expand Sidebar' : 'Collapse Sidebar'}
+                            >
+                                {isCompact ? '>>' : '<<'}
+                            </button>
+                        </div>
+                        <ul className="space-y-2 flex-grow">
                             {['About', 'Features', 'Installation', 'Usage', 'Customization', 'Documentation', 'Contributing'].map((item) => (
                                 <li key={item}>
                                     <a
                                         href={`#${item.toLowerCase()}`}
-                                        className="block px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                                        className="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
                                         onClick={() => toggleSidebar(false)}
                                     >
-                                        {item}
+                                        <span className="text-lg">{item[0]}</span>
+                                        {!isCompact && (
+                                            <span className="ml-2">{item}</span>
+                                        )}
                                     </a>
                                 </li>
                             ))}
@@ -40,7 +54,7 @@
 
         function Hero() {
             return (
-                <section className="relative bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen flex items-center justify-center text-center px-4">
+                <section className="relative bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen flex items-center justify-center text-center px-4 pt-16">
                     <div className="relative z-10 max-w-4xl mx-auto">
                         <img
                             src="logo.png"
@@ -74,9 +88,14 @@
 
         function App() {
             const [sidebarOpen, setSidebarOpen] = React.useState(false);
+            const [isCompact, setIsCompact] = React.useState(false);
 
             const toggleSidebar = (open) => {
                 setSidebarOpen(open);
+            };
+
+            const toggleCompact = () => {
+                setIsCompact(!isCompact);
             };
 
             return (
@@ -87,16 +106,20 @@
                     >
                         {sidebarOpen ? 'Close' : 'Menu'}
                     </button>
-                    <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+                    <Sidebar
+                        isOpen={sidebarOpen}
+                        toggleSidebar={toggleSidebar}
+                        isCompact={isCompact}
+                        toggleCompact={toggleCompact}
+                    />
                     <Hero />
-                    <main className="max-w-7xl mx-auto py-12 md:ml-64">
+                    <main className={`max-w-7xl mx-auto py-12 transition-all duration-300 ${isCompact ? 'md:ml-20' : 'md:ml-64'}`}>
                         <Section id="about" title="About Flow Desktop">
                             <p className="mb-4">
                                 <strong>Flow Desktop</strong> is a lightweight, modern desktop environment for Linux, built with XCB for X11 and GTK4 for settings and development tools. It integrates seamlessly with the Openbox window manager, offering a minimal yet powerful interface with a customizable taskbar, application launchers, system clock, settings UI, and a code editor for developers.
                             </p>
                             <p className="mb-4">
                                 Perfect for low-resource systems or users who love a clean desktop, Flow Desktop combines performance with modern features. Whether you're a developer or a minimalist, Flow Desktop provides a fast, customizable workspace.
-                            </chaften: Flow Desktop aims to provide a modern desktop experience similar to KDE Plasma, with features like desktop icons, a taskbar with app launcher, system tray, and window management.[](https://github.com/superuser-pushexe/flow)
                             </p>
                             <h3 className="text-xl font-semibold text-white mt-6 mb-4">Why Choose Flow Desktop?</h3>
                             <ul className="list-disc list-inside space-y-2">
