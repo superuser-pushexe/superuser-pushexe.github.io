@@ -119,19 +119,41 @@
     .glass-panel:hover {
       transform: scale(1.02);
     }
+    
+    /* Navigation Bar styling */
+    header {
+      /* making the nav fixed with a glassmorphism effect */
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    header a {
+      transition: color 0.3s ease;
+    }
   </style>
 </head>
 <body class="light-mode">
-  <!-- Header -->
-  <div class="flex justify-between items-center p-6 animate-fade">
-    <h1 class="text-4xl font-bold text-primary animate-slide-left">Flow Desktop</h1>
-    <button id="theme-toggle" class="p-2 bg-blue-500 text-white rounded-lg animate-pulse">
-      Toggle Theme
-    </button>
-  </div>
+  <!-- Navigation Bar -->
+  <header class="fixed top-0 w-full z-50 animate-fade">
+    <div class="flex justify-between items-center px-6 py-4">
+      <h1 class="text-4xl font-bold text-primary animate-slide-left">Flow Desktop</h1>
+      <nav class="space-x-6">
+        <a href="#hero" class="text-white hover:text-blue-400">Home</a>
+        <a href="#about" class="text-white hover:text-blue-400">About</a>
+        <a href="#features" class="text-white hover:text-blue-400">Features</a>
+        <a href="#installation" class="text-white hover:text-blue-400">Installation</a>
+        <a href="#usage" class="text-white hover:text-blue-400">Usage</a>
+        <a href="#github" class="text-white hover:text-blue-400">GitHub</a>
+        <a href="docs.html" class="text-white hover:text-blue-400">Documentation</a>
+      </nav>
+      <button id="theme-toggle" class="p-2 bg-blue-500 text-white rounded-lg animate-pulse">Toggle Theme</button>
+    </div>
+  </header>
   
-  <!-- Hero Section with Shimmer Background -->
-  <section class="flex justify-center items-center min-h-screen animate-fade shimmer-bg">
+  <!-- Spacer to push content below the fixed nav -->
+  <div class="h-20"></div>
+  
+  <!-- Hero Section -->
+  <section id="hero" class="flex justify-center items-center min-h-screen animate-fade shimmer-bg">
     <div class="text-center glass-panel animate-fade">
       <img src="logo.png" alt="Flow Desktop Logo" class="mx-auto w-32 h-18 animate-float" />
       <h2 class="text-3xl font-bold mt-4">A Lightweight, Modern Linux Desktop</h2>
@@ -189,33 +211,27 @@
       </ul>
     </section>
     
-    <!-- GitHub Section with 500+ words of details -->
+    <!-- Expanded GitHub Section -->
     <section id="github" class="mb-8 p-6 bg-gray-700 text-white rounded-lg glass-panel animate-on-scroll">
       <h2 class="text-3xl font-bold">Flow Desktop: An Open-Source Linux Desktop Environment</h2>
       <p class="mt-4">
-        Flow Desktop is a lightweight Linux desktop built with XCB for X11 and GTK4 for settings. Designed for performance, simplicity, and customization,
-        it delivers an elegant experience that seamlessly integrates with Openbox. This project emphasizes minimal resource consumption without sacrificing powerful features.
+        Flow Desktop is not just a lightweight desktop environment; it is a testament to modern open-source development that emphasizes performance, efficiency, and complete customization for the Linux community. The source code for this project is available on GitHub at 
+        <a href="https://github.com/superuser-pushexe/Flow-Desktop" class="text-blue-400 hover:underline">github.com/superuser-pushexe/Flow-Desktop</a>, where every line of code is designed with care and precision.
       </p>
       <p class="mt-4">
-        At its core, Flow Desktop produces a modern user interface complete with customizable elements. The built-in taskbar displays active applications,
-        offers quick access to system notifications, and even provides intuitive volume controls. The Application Menu is neatly organized, making it easy to access 
-        all installed programs while the System Clock remains elegantly integrated for time management. With the Settings UI powered by GTK4, users can effortlessly
-        modify wallpapers, configure display settings, and personalize the entire desktop experience.
+        The repository is organized in a modular fashion. The core components, such as the interface built with XCB for X11 and the GTK4-driven settings, are separated from peripheral functionalities. This separation not only makes the code easier to maintain but also simplifies the process of adding new features. Detailed comments and documentation are provided throughout the code base so that developers of all levels can quickly understand the structure and design.
       </p>
       <p class="mt-4">
-        One of the standout features of Flow Desktop is its Flow Builder—an integrated development environment that includes terminal support, enabling users
-        to code and test applications in a seamless manner. Additionally, Flow Desktop supports Wayland, making it adaptable to modern Linux display protocols,
-        while also ensuring that multi-monitor setups receive specialized attention through enhanced configurations.
+        A key aspect of Flow Desktop is its integration with the Openbox window manager. By leveraging Openbox, the project achieves a balance between simplicity and versatility. This integration allows for seamless desktop interactions while ensuring smooth performance even on low-resource machines. Whether troubleshooting, optimizing, or extending functionality, the clear separation of concerns in the project makes it very approachable.
       </p>
       <p class="mt-4">
-        The project is hosted on GitHub, allowing developers and enthusiasts alike to contribute. Whether you're interested in submitting bug fixes, suggesting new features,
-        or participating in discussions, Flow Desktop welcomes collaboration. Every pull request, issue report, and piece of documentation added helps improve the experience
-        for all users. The repository is actively maintained, and future improvements aim to incorporate more dynamic widgets, enhanced multi-monitor support, and even smoother
-        transitions for an ultra-modern look.
+        Contributions are highly encouraged. The repository maintains a streamlined pull request system and robust issue tracking, ensuring that every change is carefully reviewed and tested. With strict coding standards and continuous integration in place, contributions help improve the user experience and add exciting new features to the project. Detailed guidelines, coding conventions, and a clear roadmap for future improvements are part of the repository, making it a collaborative platform for developers.
       </p>
       <p class="mt-4">
-        If you're passionate about open-source, we invite you to visit the repository, clone the code, and join our collaborative journey. Through meaningful contributions
-        and community insights, Flow Desktop will continue to evolve and push the boundaries of what a lightweight Linux desktop can offer.
+        Looking ahead, planned enhancements include dynamic widgets, further performance optimizations, and improved multi-monitor support. The GitHub community is active, with discussions and proposals shaping the evolving nature of Flow Desktop. By joining this project, you'll be part of a vibrant open-source ecosystem dedicated to redefining the Linux desktop.
+      </p>
+      <p class="mt-4">
+        For those interested in exploring the code, learning from its modular organization, or contributing their expertise, the GitHub repository stands as a reliable resource proving that innovative design exists in simplicity.
       </p>
       <a href="https://github.com/superuser-pushexe/Flow-Desktop" class="text-blue-400 text-lg font-semibold hover:underline block mt-6">
         Visit the GitHub Repository
