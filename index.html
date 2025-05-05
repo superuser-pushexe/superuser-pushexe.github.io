@@ -1,135 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Desktop - Lightweight Linux Desktop Environment</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        /* Smooth gradient background */
-        :root {
-            --bg-gradient-light: linear-gradient(135deg, #f9f9f9, #dde7f7);
-            --text-color-light: #333;
-            --bg-gradient-dark: linear-gradient(135deg, #1a202c, #323946);
-            --text-color-dark: #e2e8f0;
-            --primary-color: #3b82f6;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: background 0.5s ease, color 0.5s ease;
-        }
-
-        .dark-mode {
-            background: var(--bg-gradient-dark);
-            color: var(--text-color-dark);
-        }
-
-        .light-mode {
-            background: var(--bg-gradient-light);
-            color: var(--text-color-light);
-        }
-
-        /* Glassmorphism panels */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .glass-panel:hover {
-            transform: scale(1.02);
-        }
-
-        /* Animated button */
-        button {
-            transition: all 0.3s ease-in-out;
-            padding: 12px 18px;
-            border-radius: 25px;
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            transform: scale(1.07);
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Floating animation */
-        @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0); }
-        }
-
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow Desktop - Lightweight Linux Desktop Environment</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Theme variables with gradient backgrounds */
+    :root {
+      --bg-gradient-light: linear-gradient(135deg, #f9f9f9, #dde7f7);
+      --text-color-light: #333;
+      --bg-gradient-dark: linear-gradient(135deg, #1a202c, #323946);
+      --text-color-dark: #e2e8f0;
+      --primary-color: #3b82f6;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+    
+    .light-mode {
+      background: var(--bg-gradient-light);
+      color: var(--text-color-light);
+    }
+    
+    .dark-mode {
+      background: var(--bg-gradient-dark);
+      color: var(--text-color-dark);
+    }
+    
+    /* Button styling and pulse effect */
+    button {
+      transition: all 0.3s ease-in-out;
+      padding: 10px 16px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .animate-pulse {
+      animation: pulse 1.5s infinite;
+    }
+    
+    /* Floating animation for logo */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Entrance fade-in animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade {
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    /* Slide in animation from left */
+    @keyframes slideInLeft {
+      0% { opacity: 0; transform: translateX(-50px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    .animate-slide-left {
+      animation: slideInLeft 1s ease forwards;
+    }
+    
+    /* Shimmer effect for background */
+    @keyframes shimmer {
+      0% { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+    .shimmer-bg {
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+      background-size: 800px 100%;
+      animation: shimmer 2s infinite;
+    }
+    
+    /* Scroll-triggered entrance animations */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Glassmorphism styling for panels and sections */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease-in-out;
+    }
+    .glass-panel:hover {
+      transform: scale(1.02);
+    }
+  </style>
 </head>
 <body class="light-mode">
-    <div class="flex justify-between items-center p-6">
-        <h1 class="text-4xl font-bold text-primary">Flow Desktop</h1>
-        <button id="theme-toggle">Toggle Theme</button>
+  <!-- Header -->
+  <div class="flex justify-between items-center p-6 animate-fade">
+    <h1 class="text-4xl font-bold text-primary animate-slide-left">Flow Desktop</h1>
+    <button id="theme-toggle" class="p-2 bg-blue-500 text-white rounded-lg animate-pulse">
+      Toggle Theme
+    </button>
+  </div>
+  
+  <!-- Hero Section with Shimmer Background -->
+  <section class="flex justify-center items-center min-h-screen animate-fade shimmer-bg">
+    <div class="text-center glass-panel animate-fade">
+      <img src="logo.png" alt="Flow Desktop Logo" class="mx-auto w-32 h-18 animate-float" />
+      <h2 class="text-3xl font-bold mt-4">A Lightweight, Modern Linux Desktop</h2>
+      <p class="text-lg mt-2">Built with XCB and GTK4 for speed and simplicity.</p>
     </div>
-
-    <section class="flex justify-center items-center min-h-screen">
-        <div class="text-center glass-panel">
-            <img src="logo.png" alt="Flow Desktop Logo" class="mx-auto w-32 h-18 animate-float">
-            <h2 class="text-3xl font-bold mt-4">A Lightweight, Modern Linux Desktop</h2>
-            <p class="text-lg mt-2">Built with XCB and GTK4 for speed and simplicity.</p>
-        </div>
+  </section>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto py-12">
+    <!-- About Section -->
+    <section id="about" class="mb-8 p-6 bg-blue-900 text-white rounded-lg glass-panel animate-on-scroll">
+      <h2 class="text-3xl font-bold">About Flow Desktop</h2>
+      <p class="mt-4">
+        Flow Desktop is a lightweight, modern desktop environment for Linux, built with XCB for X11 and GTK4 for settings and development tools.
+        It integrates seamlessly with the Openbox window manager, offering a minimal yet powerful interface.
+      </p>
+      <p class="mt-4">
+        Perfect for low-resource systems or users who love a clean desktop, Flow Desktop combines performance with modern features.
+      </p>
     </section>
-
-    <main class="max-w-7xl mx-auto py-12">
-        <section id="about" class="mb-8 p-6 glass-panel">
-            <h2 class="text-3xl font-bold">About Flow Desktop</h2>
-            <p class="mt-4">Flow Desktop is a lightweight, modern desktop environment for Linux, built with XCB for X11 and GTK4 for settings and development tools.</p>
-        </section>
-
-        <section id="features" class="mb-8 p-6 glass-panel">
-            <h2 class="text-3xl font-bold">Features</h2>
-            <ul class="mt-4 list-disc list-inside">
-                <li>Customizable Taskbar</li>
-                <li>Application Menu</li>
-                <li>System Clock</li>
-                <li>Settings UI</li>
-                <li>Flow Builder</li>
-                <li>Volume Controls</li>
-                <li>Wayland Support</li>
-            </ul>
-        </section>
-    </main>
-
-    <footer class="glass-panel py-6 text-center">
-        <p>© 2025 Flow Desktop by superuser-pushexe. GPL v3.0 License.</p>
-    </footer>
-
-    <script>
-        const themeToggleButton = document.getElementById("theme-toggle");
-        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-
-        function setTheme(mode) {
-            document.body.classList.remove("light-mode", "dark-mode");
-            document.body.classList.add(mode);
+    
+    <!-- Features Section -->
+    <section id="features" class="mb-8 p-6 bg-gray-800 text-white rounded-lg glass-panel animate-on-scroll">
+      <h2 class="text-3xl font-bold">Features</h2>
+      <ul class="mt-4 list-disc list-inside">
+        <li>Customizable Taskbar</li>
+        <li>Application Menu</li>
+        <li>System Clock</li>
+        <li>Settings UI</li>
+        <li>Flow Builder</li>
+        <li>Volume Controls</li>
+        <li>Wayland Support</li>
+      </ul>
+    </section>
+    
+    <!-- Installation Section -->
+    <section id="installation" class="mb-8 p-6 bg-gray-900 text-white rounded-lg glass-panel animate-on-scroll">
+      <h2 class="text-3xl font-bold">Installation</h2>
+      <ol class="mt-4 list-decimal list-inside">
+        <li>Clone the repository: <code>git clone https://github.com/superuser-pushexe/Flow-Desktop.git</code></li>
+        <li>Set up the build: <code>mkdir build && cd build && meson setup ..</code></li>
+        <li>Compile: <code>ninja</code></li>
+        <li>Run components: <code>startx ./flow ./flow-settings ./flow-builder</code></li>
+      </ol>
+      <p class="mt-4">Ensure Openbox is running before starting <code>flow</code>.</p>
+    </section>
+    
+    <!-- Usage Section -->
+    <section id="usage" class="mb-8 p-6 bg-blue-800 text-white rounded-lg glass-panel animate-on-scroll">
+      <h2 class="text-3xl font-bold">Usage</h2>
+      <ul class="mt-4 list-disc list-inside">
+        <li>Taskbar (<code>flow</code>) - Displays apps, volume controls, and a clock.</li>
+        <li>Settings (<code>flow-settings</code>) - Change wallpapers and system info.</li>
+        <li>Builder (<code>flow-builder</code>) - Code editor and terminal integration.</li>
+      </ul>
+    </section>
+    
+    <!-- GitHub Section with 500+ words of details -->
+    <section id="github" class="mb-8 p-6 bg-gray-700 text-white rounded-lg glass-panel animate-on-scroll">
+      <h2 class="text-3xl font-bold">Flow Desktop: An Open-Source Linux Desktop Environment</h2>
+      <p class="mt-4">
+        Flow Desktop is a lightweight Linux desktop built with XCB for X11 and GTK4 for settings. Designed for performance, simplicity, and customization,
+        it delivers an elegant experience that seamlessly integrates with Openbox. This project emphasizes minimal resource consumption without sacrificing powerful features.
+      </p>
+      <p class="mt-4">
+        At its core, Flow Desktop produces a modern user interface complete with customizable elements. The built-in taskbar displays active applications,
+        offers quick access to system notifications, and even provides intuitive volume controls. The Application Menu is neatly organized, making it easy to access 
+        all installed programs while the System Clock remains elegantly integrated for time management. With the Settings UI powered by GTK4, users can effortlessly
+        modify wallpapers, configure display settings, and personalize the entire desktop experience.
+      </p>
+      <p class="mt-4">
+        One of the standout features of Flow Desktop is its Flow Builder—an integrated development environment that includes terminal support, enabling users
+        to code and test applications in a seamless manner. Additionally, Flow Desktop supports Wayland, making it adaptable to modern Linux display protocols,
+        while also ensuring that multi-monitor setups receive specialized attention through enhanced configurations.
+      </p>
+      <p class="mt-4">
+        The project is hosted on GitHub, allowing developers and enthusiasts alike to contribute. Whether you're interested in submitting bug fixes, suggesting new features,
+        or participating in discussions, Flow Desktop welcomes collaboration. Every pull request, issue report, and piece of documentation added helps improve the experience
+        for all users. The repository is actively maintained, and future improvements aim to incorporate more dynamic widgets, enhanced multi-monitor support, and even smoother
+        transitions for an ultra-modern look.
+      </p>
+      <p class="mt-4">
+        If you're passionate about open-source, we invite you to visit the repository, clone the code, and join our collaborative journey. Through meaningful contributions
+        and community insights, Flow Desktop will continue to evolve and push the boundaries of what a lightweight Linux desktop can offer.
+      </p>
+      <a href="https://github.com/superuser-pushexe/Flow-Desktop" class="text-blue-400 text-lg font-semibold hover:underline block mt-6">
+        Visit the GitHub Repository
+      </a>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-6 text-center animate-fade">
+    <p>© 2025 Flow Desktop by superuser-pushexe. GPL v3.0 License.</p>
+    <div class="mt-4">
+      <a href="https://github.com/superuser-pushexe/Flow-Desktop" class="text-blue-400 hover:underline">GitHub Repository</a>
+      <a href="mailto:fullynerfed@mailfence.com" class="text-blue-400 hover:underline ml-4">Contact</a>
+    </div>
+  </footer>
+  
+  <!-- JavaScript for Theme Toggle and Scroll Animations -->
+  <script>
+    // Theme toggle functionality with smooth transition
+    const themeToggleButton = document.getElementById("theme-toggle");
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    
+    function setTheme(mode) {
+      document.body.classList.remove("light-mode", "dark-mode");
+      document.body.classList.add(mode);
+    }
+    
+    // Set initial theme based on system preference
+    if (prefersDarkScheme.matches) {
+      setTheme("dark-mode");
+    } else {
+      setTheme("light-mode");
+    }
+    
+    // Toggle theme on button click
+    themeToggleButton.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      document.body.classList.toggle("light-mode");
+    });
+    
+    // Intersection Observer for scroll-triggered animations
+    const animateOnScrollElements = document.querySelectorAll(".animate-on-scroll");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
         }
-
-        if (prefersDarkScheme.matches) {
-            setTheme("dark-mode");
-        } else {
-            setTheme("light-mode");
-        }
-
-        themeToggleButton.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-            document.body.classList.toggle("light-mode");
-        });
-    </script>
+      });
+    }, { threshold: 0.2 });
+    
+    animateOnScrollElements.forEach(el => {
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
