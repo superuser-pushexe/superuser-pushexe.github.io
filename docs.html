@@ -1,809 +1,943 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flow Desktop - Line-by-Line C Source Documentation</title>
+  <meta charset="UTF-8">
+  <title>Comprehensive Explanation of flow.c</title>
   <style>
-    /* Basic Reset and Typography */
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
       line-height: 1.6;
+      margin: 20px;
+      background-color: #f9f9f9;
       color: #333;
     }
-    header {
-      background: #1a202c;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-    nav a {
-      color: #fff;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #4fa3ff;
-    }
-    .container {
-      padding: 100px 20px 20px 20px;
-      max-width: 1000px;
-      margin: auto;
-      background: #fff;
-    }
-    section {
-      margin-bottom: 60px;
-    }
-    h2 {
-      color: #3b82f6;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 5px;
-    }
-    h3 {
-      color: #3b82f6;
-      margin-top: 20px;
+    h1, h2, h3 {
+      color: #444;
     }
     pre {
-      background: #eee;
-      padding: 5px;
+      background-color: #eee;
+      padding: 10px;
+      border: 1px solid #ccc;
       overflow-x: auto;
-      font-size: 0.95em;
     }
-    li {
-      margin-bottom: 10px;
-    }
-    .line-code {
-      display: inline-block;
-      background: #ddd;
+    code {
+      font-family: Consolas, monospace;
+      background-color: #f4f4f4;
       padding: 2px 4px;
-      margin-right: 10px;
-      font-family: monospace;
+      border-radius: 4px;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #1a202c;
+    details {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    summary {
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .tooltip {
+      position: relative;
+      border-bottom: 1px dotted #000;
+      cursor: help;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 230px;
+      background-color: #555;
       color: #fff;
+      text-align: left;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -115px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <!-- Fixed Navigation Bar -->
-  <header>
-    <nav>
-      <a href="#flow-c">flow.c</a>
-      <a href="#flow_settings-c">flow_settings.c</a>
-      <a href="#flow_builder-c">flow_builder.c</a>
-    </nav>
-  </header>
-  
-  <!-- Main Documentation Container -->
-  <div class="container">
-    
-    <!-- ===================================================================== -->
-    <!-- FLOW.C – CORE DESKTOP & TASKBAR IMPLEMENTATION -->
-    <!-- ===================================================================== -->
-    <section id="flow-c">
-      <h2>flow.c – Line-by-Line Explanation</h2>
-      <ol>
-        <!-- Line 1 -->
-        <li>
-          <code class="line-code">/* flow-desktop.c - Robust X11 desktop with Openbox */</code>
-          <p>This comment introduces the file and states its purpose: to implement a robust X11 desktop environment meant to work with the Openbox window manager.</p>
-        </li>
-        <!-- Line 2 -->
-        <li>
-          <code class="line-code">#include &lt;X11/Xlib.h&gt;</code>
-          <p>This include imports the Xlib library, which provides functions for interacting with the X Window System (creating windows, handling events, etc.).</p>
-        </li>
-        <!-- Line 3 -->
-        <li>
-          <code class="line-code">#include &lt;X11/Xutil.h&gt;</code>
-          <p>This header contains utility functions and definitions that complement Xlib.</p>
-        </li>
-        <!-- Line 4 -->
-        <li>
-          <code class="line-code">#include &lt;X11/Xatom.h&gt;</code>
-          <p>This file provides functions for working with “atoms” (unique identifiers for strings), which are used to define window properties.</p>
-        </li>
-        <!-- Line 5 -->
-        <li>
-          <code class="line-code">#include &lt;X11/keysym.h&gt;</code>
-          <p>This include provides definitions for key symbols used in keyboard event handling.</p>
-        </li>
-        <!-- Line 6 -->
-        <li>
-          <code class="line-code">#include &lt;stdlib.h&gt;</code>
-          <p>Includes standard library functions for memory allocation, process control, conversions, etc.</p>
-        </li>
-        <!-- Line 7 -->
-        <li>
-          <code class="line-code">#include &lt;unistd.h&gt;</code>
-          <p>Provides access to POSIX operating system API functions, such as fork() and sleep().</p>
-        </li>
-        <!-- Line 8 -->
-        <li>
-          <code class="line-code">#include &lt;stdio.h&gt;</code>
-          <p>Includes standard input/output functions for file operations, printing, etc.</p>
-        </li>
-        <!-- Line 9 -->
-        <li>
-          <code class="line-code">#include &lt;string.h&gt;</code>
-          <p>Provides functions for string manipulation, like strdup() and snprintf().</p>
-        </li>
-        <!-- Line 10 -->
-        <li>
-          <code class="line-code">#include &lt;time.h&gt;</code>
-          <p>Enables the use of time-related functions, such as sleep timers or performance measurements.</p>
-        </li>
-        <!-- Line 11 -->
-        <li>
-          <code class="line-code">#include &lt;sys/wait.h&gt;</code>
-          <p>This header defines macros and functions for waiting on process termination (e.g. using wait()).</p>
-        </li>
-        <!-- Line 13: (Blank line between groups) -->
-        <li>
-          <code class="line-code">/* Configuration */</code>
-          <p>A comment indicating that the following definitions set key configuration parameters.</p>
-        </li>
-        <!-- Line 14 -->
-        <li>
-          <code class="line-code">#define TASKBAR_HEIGHT 30</code>
-          <p>Defines the constant height (in pixels) of the taskbar.</p>
-        </li>
-        <!-- Line 15 -->
-        <li>
-          <code class="line-code">#define LAUNCHER_SIZE 24</code>
-          <p>Sets the constant size (in pixels) for launcher icons.</p>
-        </li>
-        <!-- Line 16 -->
-        <li>
-          <code class="line-code">#define LAUNCHER_PADDING 5</code>
-          <p>Specifies the padding value (in pixels) between launcher icons.</p>
-        </li>
-        <!-- Line 18 (Blank line) -->
-        <li>
-          <code class="line-code">/* Define Launcher structure */</code>
-          <p>Starts the definition of a new structure used for launcher objects.</p>
-        </li>
-        <!-- Line 19 -->
-        <li>
-          <code class="line-code">typedef struct {</code>
-          <p>This begins defining the struct.</p>
-        </li>
-        <!-- Line 20 -->
-        <li>
-          <code class="line-code">    Window win;</code>
-          <p>Declares a member <code>win</code> of type <code>Window</code> for storing the X11 window handle of the launcher icon.</p>
-        </li>
-        <!-- Line 21 -->
-        <li>
-          <code class="line-code">    char *command;</code>
-          <p>Declares a <code>command</code> pointer that will hold a string representing the command to run when the launcher is clicked.</p>
-        </li>
-        <!-- Line 22 -->
-        <li>
-          <code class="line-code">} Launcher;</code>
-          <p>Ends the structure definition and defines the alias <code>Launcher</code> for this struct.</p>
-        </li>
-        <!-- Line 24 -->
-        <li>
-          <code class="line-code">Display *display;</code>
-          <p>Declares a global pointer to an X Display to represent the connection to the X server.</p>
-        </li>
-        <!-- Line 25 -->
-        <li>
-          <code class="line-code">Window root, taskbar_win;</code>
-          <p>Declares two global windows: one for the root window and one for the taskbar.</p>
-        </li>
-        <!-- Line 26 -->
-        <li>
-          <code class="line-code">int screen;</code>
-          <p>Declares a global integer for storing the default screen number.</p>
-        </li>
-        <!-- Line 28 -->
-        <li>
-          <code class="line-code">Launcher launchers[5];</code>
-          <p>Creates an array to hold up to 5 launcher structures.</p>
-        </li>
-        <!-- Line 29 -->
-        <li>
-          <code class="line-code">int launcher_count = 0;</code>
-          <p>Initializes a counter to keep track of how many launchers have been added.</p>
-        </li>
-        <!-- Line 31 -->
-        <li>
-          <code class="line-code">void x11_check(int status, const char *msg) {</code>
-          <p>Begins the definition of a helper function to check X11 error statuses.</p>
-        </li>
-        <!-- Line 32 -->
-        <li>
-          <code class="line-code">    if (status == BadAlloc || status == BadWindow) {</code>
-          <p>Checks if the status equals either <code>BadAlloc</code> (allocation failure) or <code>BadWindow</code> (an invalid window condition).</p>
-        </li>
-        <!-- Line 33 -->
-        <li>
-          <code class="line-code">        fprintf(stderr, "X11 Error: %s\n", msg);</code>
-          <p>If an error is detected, prints an error message to standard error with the supplied message.</p>
-        </li>
-        <!-- Line 34 -->
-        <li>
-          <code class="line-code">        exit(EXIT_FAILURE);</code>
-          <p>Terminates the program with a failure code.</p>
-        </li>
-        <!-- Line 35 -->
-        <li>
-          <code class="line-code">    }</code>
-          <p>Ends the conditional block.</p>
-        </li>
-        <!-- Line 36 -->
-        <li>
-          <code class="line-code">}</code>
-          <p>Ends the <code>x11_check</code> function.</p>
-        </li>
-        <!-- Line 38 -->
-        <li>
-          <code class="line-code">void launch_openbox() {</code>
-          <p>Begins the definition of a function to start the Openbox window manager.</p>
-        </li>
-        <!-- Line 39 -->
-        <li>
-          <code class="line-code">    if (fork() == 0) {</code>
-          <p>Forks the process. The child process (where fork() returns 0) will attempt to launch Openbox.</p>
-        </li>
-        <!-- Line 40 -->
-        <li>
-          <code class="line-code">        /* First try with XDG config */</code>
-          <p>A comment explaining that the code next attempts to use the user’s XDG configuration file.</p>
-        </li>
-        <!-- Line 41 -->
-        <li>
-          <code class="line-code">        char *home = getenv("HOME");</code>
-          <p>Retrieves the user's home directory from the environment variables.</p>
-        </li>
-        <!-- Line 42 -->
-        <li>
-          <code class="line-code">        char config_path[256];</code>
-          <p>Declares an array to hold the configuration file path.</p>
-        </li>
-        <!-- Line 43 -->
-        <li>
-          <code class="line-code">        snprintf(config_path, sizeof(config_path), "%s/.config/openbox/autostart", home);</code>
-          <p>Formats and stores the path to the Openbox autostart configuration file in <code>config_path</code>.</p>
-        </li>
-        <!-- Line 44 -->
-        <li>
-          <code class="line-code">        if (access(config_path, F_OK) != -1) {</code>
-          <p>Checks if the configuration file exists using <code>access()</code>.</p>
-        </li>
-        <!-- Line 45 -->
-        <li>
-          <code class="line-code">            execlp("openbox", "openbox", "--config-file", config_path, "--sm-disable", NULL);</code>
-          <p>If the file exists, executes Openbox with the custom configuration file provided and disables session management.</p>
-        </li>
-        <!-- Line 46 -->
-        <li>
-          <code class="line-code">        }</code>
-          <p>Ends the conditional check on configuration file existence.</p>
-        </li>
-        <!-- Line 47 -->
-        <li>
-          <code class="line-code">        execlp("openbox", "openbox", "--sm-disable", NULL);</code>
-          <p>If no configuration file exists, executes Openbox with default settings (but still disables session management).</p>
-        </li>
-        <!-- Line 48 -->
-        <li>
-          <code class="line-code">        perror("Failed to start Openbox");</code>
-          <p>If <code>execlp</code> fails, prints an error message using <code>perror()</code>.</p>
-        </li>
-        <!-- Line 49 -->
-        <li>
-          <code class="line-code">        exit(EXIT_FAILURE);</code>
-          <p>Terminates the child process with a failure code.</p>
-        </li>
-        <!-- Line 50 -->
-        <li>
-          <code class="line-code">    }</code>
-          <p>Ends the branch of code running in the child process.</p>
-        </li>
-        <!-- Line 51 -->
-        <li>
-          <code class="line-code">    sleep(1); // Wait for WM to initialize</code>
-          <p>The parent process sleeps for one second to give Openbox time to start.</p>
-        </li>
-        <!-- Line 53 -->
-        <li>
-          <code class="line-code">}</code>
-          <p>Ends the <code>launch_openbox</code> function.</p>
-        </li>
-        <!-- Line 55 -->
-        <li>
-          <code class="line-code">void create_taskbar() {</code>
-          <p>Begins the function to create the taskbar window.</p>
-        </li>
-        <!-- Line 56 -->
-        <li>
-          <code class="line-code">    XSetWindowAttributes attrs = {</code>
-          <p>Declares and initializes an <code>XSetWindowAttributes</code> structure to define window attributes.</p>
-        </li>
-        <!-- Line 57 -->
-        <li>
-          <code class="line-code">        .override_redirect = True,</code>
-          <p>Sets the window to bypass the window manager decoration (the WM will not control it).</p>
-        </li>
-        <!-- Line 58 -->
-        <li>
-          <code class="line-code">        .background_pixel = BlackPixel(display, screen),</code>
-          <p>Sets the window's background color to black.</p>
-        </li>
-        <!-- Line 59 -->
-        <li>
-          <code class="line-code">        .event_mask = ExposureMask | ButtonPressMask</code>
-          <p>Specifies that this window will listen for expose (redraw) and mouse button press events.</p>
-        </li>
-        <!-- Line 60 -->
-        <li>
-          <code class="line-code">    };</code>
-          <p>Ends the initialization of the attributes structure.</p>
-        </li>
-        <!-- Line 61 -->
-        <li>
-          <code class="line-code">    taskbar_win = XCreateWindow(display, root, 0, DisplayHeight(display, screen) - TASKBAR_HEIGHT,</code>
-          <p>Starts the call to create the taskbar window as a child of the root window; the x-position is 0 and y-position is calculated to position it at the screen bottom.</p>
-        </li>
-        <!-- Line 62 -->
-        <li>
-          <code class="line-code">                                DisplayWidth(display, screen), TASKBAR_HEIGHT, 0,</code>
-          <p>Specifies that the window’s width is the full screen width and its height is TASKBAR_HEIGHT; border width is set to 0.</p>
-        </li>
-        <!-- Line 63 -->
-        <li>
-          <code class="line-code">                                CopyFromParent, InputOutput, CopyFromParent,</code>
-          <p>Sets visual depth and class by copying from the parent (the root window).</p>
-        </li>
-        <!-- Line 64 -->
-        <li>
-          <code class="line-code">                                CWOverrideRedirect | CWBackPixel | CWEventMask, &amp;attrs);</code>
-          <p>Specifies which attributes (override redirect, background pixel, and event mask) are set and passes the attributes structure.</p>
-        </li>
-        <!-- Line 65 -->
-        <li>
-          <code class="line-code">    /* Set window type as dock */</code>
-          <p>A comment indicating that the next lines will mark the taskbar window as a dock.</p>
-        </li>
-        <!-- Line 66 -->
-        <li>
-          <code class="line-code">    Atom net_wm_window_type = XInternAtom(display, "_NET_WM_WINDOW_TYPE", False);</code>
-          <p>Retrieves an Atom for the window type property.</p>
-        </li>
-        <!-- Line 67 -->
-        <li>
-          <code class="line-code">    Atom net_wm_window_type_dock = XInternAtom(display, "_NET_WM_WINDOW_TYPE_DOCK", False);</code>
-          <p>Retrieves an Atom identifying a dock-type window.</p>
-        </li>
-        <!-- Line 68 -->
-        <li>
-          <code class="line-code">    XChangeProperty(display, taskbar_win, net_wm_window_type, XA_ATOM, 32, PropModeReplace,</code>
-          <p>Changes the taskbar window property to specify its type using the dock Atom.</p>
-        </li>
-        <!-- Line 69 -->
-        <li>
-          <code class="line-code">                    (unsigned char *)&amp;net_wm_window_type_dock, 1);</code>
-          <p>Passes the dock Atom as the new property value, with a data format of 32 bits and count 1.</p>
-        </li>
-        <!-- Line 70 -->
-        <li>
-          <code class="line-code">    XMapWindow(display, taskbar_win);</code>
-          <p>Maps (displays) the taskbar window on the screen.</p>
-        </li>
-        <!-- Line 71 -->
-        <li>
-          <code class="line-code">}</code>
-          <p>Ends the <code>create_taskbar</code> function.</p>
-        </li>
-        <!-- Line 73 -->
-        <li>
-          <code class="line-code">void add_launcher(const char *name, const char *command) {</code>
-          <p>Begins the function to add a launcher icon to the taskbar; it receives the launcher’s name and command string.</p>
-        </li>
-        <!-- Line 74 -->
-        <li>
-          <code class="line-code">    if (launcher_count >= 5) return;</code>
-          <p>If the maximum number of launchers (5) has been reached, the function returns without adding more.</p>
-        </li>
-        <!-- Line 75 -->
-        <li>
-          <code class="line-code">    int x_pos = LAUNCHER_PADDING + (launcher_count * (LAUNCHER_SIZE + LAUNCHER_PADDING));</code>
-          <p>Calculates the x-coordinate for the new launcher window, based on its order and the defined padding.</p>
-        </li>
-        <!-- Line 76 -->
-        <li>
-          <code class="line-code">    launchers[launcher_count].win = XCreateSimpleWindow(display, taskbar_win,</code>
-          <p>Creates a simple X window for the launcher. Its parent is the taskbar window.</p>
-        </li>
-        <!-- Line 77 -->
-        <li>
-          <code class="line-code">                                      x_pos, 5, LAUNCHER_SIZE, LAUNCHER_SIZE, 1,</code>
-          <p>Sets the x-position as calculated, y-position as 5 pixels from the top of the taskbar, dimensions per the defined size, and a border width of 1.</p>
-        </li>
-        <!-- Line 78 -->
-        <li>
-          <code class="line-code">                                      BlackPixel(display, screen), WhitePixel(display, screen));</code>
-          <p>Specifies the border color (black) and the background color (white) using Xlib functions.</p>
-        </li>
-        <!-- Line 79 -->
-        <li>
-          <code class="line-code">    launchers[launcher_count].command = strdup(command);</code>
-          <p>Duplicates the command string so that it is stored with the launcher, preserving the original.</p>
-        </li>
-        <!-- Line 80 -->
-        <li>
-          <code class="line-code">    XStoreName(display, launchers[launcher_count].win, name);</code>
-          <p>Sets the name of the launcher window, which may be used for window properties or debugging.</p>
-        </li>
-        <!-- Line 81 -->
-        <li>
-          <code class="line-code">    XMapWindow(display, launchers[launcher_count].win);</code>
-          <p>Displays the launcher window on the screen by mapping it.</p>
-        </li>
-        <!-- Line 82 -->
-        <li>
-          <code class="line-code">    launcher_count++;</code>
-          <p>Increments the launcher counter, so the next launcher is positioned accordingly.</p>
-        </li>
-        <!-- Line 83 -->
-        <li>
-          <code class="line-code">}</code>
-          <p>Ends the <code>add_launcher</code> function.</p>
-        </li>
-        <!-- Line 85 -->
-        <li>
-          <code class="line-code">int main(int argc, char **argv) {</code>
-          <p>Begins the <code>main</code> function, the entry point of the application.</p>
-        </li>
-        <!-- Line 86 -->
-        <li>
-          <code class="line-code">    display = XOpenDisplay(NULL);</code>
-          <p>Opens a connection to the default X server and stores the display pointer globally.</p>
-        </li>
-        <!-- Line 87 -->
-        <li>
-          <code class="line-code">    if (!display) {</code>
-          <p>Checks whether the connection to the X server failed.</p>
-        </li>
-        <!-- Line 88 -->
-        <li>
-          <code class="line-code">        fprintf(stderr, "Cannot open display\n");</code>
-          <p>If no display could be opened, prints an error message to standard error.</p>
-        </li>
-        <!-- Line 89 -->
-        <li>
-          <code class="line-code">        return EXIT_FAILURE;</code>
-          <p>Exits the program with a failure code if the display fails to open.</p>
-        </li>
-        <!-- Line 90 -->
-        <li>
-          <code class="line-code">    }</code>
-          <p>Ends the error check.</p>
-        </li>
-        <!-- Line 91 -->
-        <li>
-          <code class="line-code">    screen = DefaultScreen(display);</code>
-          <p>Retrieves the default screen number from the opened display.</p>
-        </li>
-        <!-- Line 92 -->
-        <li>
-          <code class="line-code">    root = RootWindow(display, screen);</code>
-          <p>Gets the root window for the specified screen.</p>
-        </li>
-        <!-- Line 94 -->
-        <li>
-          <code class="line-code">    create_taskbar();</code>
-          <p>Calls the <code>create_taskbar</code> function to create and map the taskbar window.</p>
-        </li>
-        <!-- Line 95 -->
-        <li>
-          <code class="line-code">    add_launcher("Terminal", "/usr/bin/xterm");</code>
-          <p>Adds a launcher for a terminal application by calling <code>add_launcher</code> with the label "Terminal" and the command to execute xterm.</p>
-        </li>
-        <!-- Line 96 -->
-        <li>
-          <code class="line-code">    add_launcher("Browser", "/usr/bin/firefox");</code>
-          <p>Adds a launcher for a browser application with the command to execute Firefox.</p>
-        </li>
-        <!-- Line 98 -->
-        <li>
-          <code class="line-code">    launch_openbox();</code>
-          <p>Calls <code>launch_openbox</code> to fork and start the Openbox window manager.</p>
-        </li>
-        <!-- Line 100 -->
-        <li>
-          <code class="line-code">    XEvent ev;</code>
-          <p>Declares a variable <code>ev</code> to store incoming X events.</p>
-        </li>
-        <!-- Line 101 -->
-        <li>
-          <code class="line-code">    while (1) {</code>
-          <p>Enters an infinite event loop to continuously process X events.</p>
-        </li>
-        <!-- Line 102 -->
-        <li>
-          <code class="line-code">        XNextEvent(display, &amp;ev);</code>
-          <p>Blocks until the next event is available and retrieves it into <code>ev</code>.</p>
-        </li>
-        <!-- Line 103 -->
-        <li>
-          <code class="line-code">        // Event handling loop can be extended here</code>
-          <p>A placeholder comment indicating where additional event handling code may be inserted.</p>
-        </li>
-        <!-- Line 105 -->
-        <li>
-          <code class="line-code">    }</code>
-          <p>Ends the infinite event loop.</p>
-        </li>
-        <!-- Line 107 -->
-        <li>
-          <code class="line-code">    XCloseDisplay(display);</code>
-          <p>This line would close the X server connection (unreachable in the current infinite loop).</p>
-        </li>
-        <!-- Line 108 -->
-        <li>
-          <code class="line-code">    return EXIT_SUCCESS;</code>
-          <p>Returns a success code on termination (again, unreachable due to the infinite loop).</p>
-        </li>
-        <!-- Line 109 -->
-        <li>
-          <code class="line-code">}</code>
-          <p>Ends the <code>main</code> function and the flow.c source file.</p>
-        </li>
-      </ol>
-    </section>
-    
-    <!-- ===================================================================== -->
-    <!-- FLOW_SETTINGS.C – GTK SETTINGS PANEL IMPLEMENTATION -->
-    <!-- ===================================================================== -->
-    <section id="flow_settings-c">
-      <h2>flow_settings.c – Line-by-Line Explanation</h2>
-      <ol>
-        <!-- Line 1 -->
-        <li>
-          <code class="line-code">/* flow_settings.c - Settings interface for Flow Desktop */</code>
-          <p>This comment explains that the file implements the settings UI for Flow Desktop using GTK.</p>
-        </li>
-        <!-- Line 2 -->
-        <li>
-          <code class="line-code">#include &lt;gtk/gtk.h&gt;</code>
-          <p>Includes the GTK header which provides the functions and types needed for GUI creation.</p>
-        </li>
-        <!-- Line 3 -->
-        <li>
-          <code class="line-code">#include &lt;stdlib.h&gt;</code>
-          <p>Includes standard library functions for memory management and general operations.</p>
-        </li>
-        <!-- Line 4 -->
-        <li>
-          <code class="line-code">#include &lt;stdio.h&gt;</code>
-          <p>Includes standard input/output functions for printing errors or debugging messages.</p>
-        </li>
-        <!-- Line 6 -->
-        <li>
-          <code class="line-code">int main(int argc, char *argv[]) {</code>
-          <p>Begins the main function—program entry point—for the settings application.</p>
-        </li>
-        <!-- Line 7 -->
-        <li>
-          <code class="line-code">    gtk_init(&amp;argc, &amp;argv);</code>
-          <p>Initializes the GTK library, parsing any command-line arguments for GTK.</p>
-        </li>
-        <!-- Line 8 -->
-        <li>
-          <code class="line-code">    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);</code>
-          <p>Creates a new top-level window widget.</p>
-        </li>
-        <!-- Line 9 -->
-        <li>
-          <code class="line-code">    gtk_window_set_title(GTK_WINDOW(window), "Flow Desktop Settings");</code>
-          <p>Sets the window’s title bar text to "Flow Desktop Settings".</p>
-        </li>
-        <!-- Line 10 -->
-        <li>
-          <code class="line-code">    gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);</code>
-          <p>Specifies that the window should have a default size of 400 pixels wide by 300 pixels high.</p>
-        </li>
-        <!-- Line 12 -->
-        <li>
-          <code class="line-code">    GtkWidget *grid = gtk_grid_new();</code>
-          <p>Creates a new grid container widget for organizing child widgets.</p>
-        </li>
-        <!-- Line 13 -->
-        <li>
-          <code class="line-code">    gtk_container_add(GTK_CONTAINER(window), grid);</code>
-          <p>Adds the grid container as the child of the window.</p>
-        </li>
-        <!-- Line 14 -->
-        <li>
-          <code class="line-code">    GtkWidget *label = gtk_label_new("Configure your settings:");</code>
-          <p>Creates a new label widget with instructional text for the user.</p>
-        </li>
-        <!-- Line 15 -->
-        <li>
-          <code class="line-code">    gtk_grid_attach(GTK_GRID(grid), label, 0, 0, 1, 1);</code>
-          <p>Attaches the label to the grid at column 0, row 0, spanning one column and one row.</p>
-        </li>
-        <!-- Line 17 -->
-        <li>
-          <code class="line-code">    // Additional widgets such as toggles, entries, and buttons would be added here.</code>
-          <p>A comment indicating that more UI elements would be inserted in a full implementation.</p>
-        </li>
-        <!-- Line 19 -->
-        <li>
-          <code class="line-code">    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);</code>
-          <p>Connects the "destroy" signal of the window (triggered when the window is closed) to the <code>gtk_main_quit</code> function to terminate the application.</p>
-        </li>
-        <!-- Line 20 -->
-        <li>
-          <code class="line-code">    gtk_widget_show_all(window);</code>
-          <p>Makes the window and all its child widgets visible on the screen.</p>
-        </li>
-        <!-- Line 21 -->
-        <li>
-          <code class="line-code">    gtk_main();</code>
-          <p>Enters the GTK main event loop, waiting for and processing events.</p>
-        </li>
-        <!-- Line 22 -->
-        <li>
-          <code class="line-code">    return 0;</code>
-          <p>Returns 0, signaling that the application has terminated successfully.</p>
-        </li>
-        <!-- Line 23 -->
-        <li>
-          <code class="line-code">}</code>
-          <p>Ends the main function and the flow_settings.c source code.</p>
-        </li>
-      </ol>
-    </section>
-    
-    <!-- ===================================================================== -->
-    <!-- FLOW_BUILDER.C – CODE EDITOR AND TERMINAL INTEGRATION -->
-    <!-- ===================================================================== -->
-    <section id="flow_builder-c">
-      <h2>flow_builder.c – Line-by-Line Explanation</h2>
-      <ol>
-        <!-- Line 1 -->
-        <li>
-          <code class="line-code">/* flow_builder.c - Code editor and terminal integration for Flow Desktop */</code>
-          <p>This comment introduces the file and states its purpose: to provide a basic code editor with terminal integration capabilities.</p>
-        </li>
-        <!-- Line 2 -->
-        <li>
-          <code class="line-code">#include &lt;gtk/gtk.h&gt;</code>
-          <p>Imports the GTK header, providing all necessary definitions for creating a graphical user interface.</p>
-        </li>
-        <!-- Line 3 -->
-        <li>
-          <code class="line-code">#include &lt;stdlib.h&gt;</code>
-          <p>Includes functions for memory allocation and general-purpose utilities.</p>
-        </li>
-        <!-- Line 4 -->
-        <li>
-          <code class="line-code">#include &lt;stdio.h&gt;</code>
-          <p>Includes the standard input/output library for diagnostic output and debugging.</p>
-        </li>
-        <!-- Line 6 -->
-        <li>
-          <code class="line-code">int main(int argc, char *argv[]) {</code>
-          <p>Begins the main function, the entry point of the Flow Builder application.</p>
-        </li>
-        <!-- Line 7 -->
-        <li>
-          <code class="line-code">    gtk_init(&amp;argc, &amp;argv);</code>
-          <p>Initializes GTK and processes any command-line arguments intended for GTK.</p>
-        </li>
-        <!-- Line 8 -->
-        <li>
-          <code class="line-code">    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);</code>
-          <p>Creates a new top-level GTK window, which will be the main container for the code editor.</p>
-        </li>
-        <!-- Line 9 -->
-        <li>
-          <code class="line-code">    gtk_window_set_title(GTK_WINDOW(window), "Flow Builder");</code>
-          <p>Sets the title of the window to "Flow Builder."</p>
-        </li>
-        <!-- Line 10 -->
-        <li>
-          <code class="line-code">    gtk_window_set_default_size(GTK_WINDOW(window), 600, 400);</code>
-          <p>Specifies the default window size to be 600 pixels wide and 400 pixels tall.</p>
-        </li>
-        <!-- Line 12 -->
-        <li>
-          <code class="line-code">    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);</code>
-          <p>Creates a new vertical box container (<code>GtkBox</code>) with spacing of 5 pixels between child widgets.</p>
-        </li>
-        <!-- Line 13 -->
-        <li>
-          <code class="line-code">    gtk_container_add(GTK_CONTAINER(window), vbox);</code>
-          <p>Adds the vertical box container to the main window as its child.</p>
-        </li>
-        <!-- Line 15 -->
-        <li>
-          <code class="line-code">    // Create a text view for code editing.</code>
-          <p>A comment indicating that the next lines will create a text editor widget.</p>
-        </li>
-        <!-- Line 16 -->
-        <li>
-          <code class="line-code">    GtkWidget *text_view = gtk_text_view_new();</code>
-          <p>Creates a new text view widget which will serve as the code editor area.</p>
-        </li>
-        <!-- Line 17 -->
-        <li>
-          <code class="line-code">    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));</code>
-          <p>Retrieves the text buffer associated with the text view; this buffer holds the editable text.</p>
-        </li>
-        <!-- Line 18 -->
-        <li>
-          <code class="line-code">    gtk_box_pack_start(GTK_BOX(vbox), text_view, TRUE, TRUE, 0);</code>
-          <p>Packs the text view into the vertical box with both expansion and fill enabled.</p>
-        </li>
-        <!-- Line 20 -->
-        <li>
-          <code class="line-code">    // Create a terminal widget placeholder (in a complete implementation, a proper terminal would be used).</code>
-          <p>A comment indicating that what follows is a placeholder representing a terminal emulator.</p>
-        </li>
-        <!-- Line 21 -->
-        <li>
-          <code class="line-code">    GtkWidget *terminal = gtk_label_new("Terminal Placeholder");</code>
-          <p>Creates a label widget displaying "Terminal Placeholder". In a full version, this would be replaced with an embedded terminal widget.</p>
-        </li>
-        <!-- Line 22 -->
-        <li>
-          <code class="line-code">    gtk_box_pack_start(GTK_BOX(vbox), terminal, FALSE, FALSE, 0);</code>
-          <p>Packs the terminal placeholder into the vertical box without expansion, so it only takes the space it needs.</p>
-        </li>
-        <!-- Line 24 -->
-        <li>
-          <code class="line-code">    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);</code>
-          <p>Connects the window's "destroy" signal to the <code>gtk_main_quit</code> function so that closing the window terminates the application.</p>
-        </li>
-        <!-- Line 25 -->
-        <li>
-          <code class="line-code">    gtk_widget_show_all(window);</code>
-          <p>Displays all widgets contained in the window.</p>
-        </li>
-        <!-- Line 26 -->
-        <li>
-          <code class="line-code">    gtk_main();</code>
-          <p>Starts the GTK main event loop which waits for and dispatches events.</p>
-        </li>
-        <!-- Line 27 -->
-        <li>
-          <code class="line-code">    return 0;</code>
-          <p>Returns 0, denoting successful execution.</p>
-        </li>
-        <!-- Line 28 -->
-        <li>
-          <code class="line-code">}</code>
-          <p>Ends the <code>main</code> function and the flow_builder.c source file.</p>
-        </li>
-      </ol>
-    </section>
-    
-  </div>
-  
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Flow Desktop by superuser-pushexe. Licensed under GPL v3.0.</p>
-  </footer>
-</body>
-</html>
+  <h1>Comprehensive Line-by-Line Explanation of flow.c</h1>
+  <p>
+    This website explains every single line of the <code>flow.c</code> source file, a lightweight X11 desktop environment built using the XCB library. The page is organized into collapsible sections. Click each header to expand the section and explore detailed commentary—including tooltips that give extra context when you hover over key terms.
+  </p>
 
+  <!-- Section: File Header & Includes -->
+  <details open>
+    <summary>File Header &amp; Includes (Lines 1-11)</summary>
+    <div>
+      <pre>
+// flow.c - Lightweight X11 desktop environment using XCB
+      </pre>
+      <p>
+        <strong>Line 1:</strong> The comment <code>// flow.c - Lightweight X11 desktop environment using XCB</code> describes the file’s name and its purpose.
+      </p>
+      <pre>
+#include &lt;xcb/xcb.h&gt;
+#include &lt;xcb/xproto.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;dirent.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;time.h&gt;
+#include &lt;gio/gio.h&gt;
+#include &lt;sys/stat.h&gt;
+      </pre>
+      <ul>
+        <li>
+          <strong>Line 2:</strong> <code>#include &lt;xcb/xcb.h&gt;</code>  
+          <span class="tooltip">[XCB Library]
+            <span class="tooltiptext">This header is the main entry point for using the XCB library, which communicates with the X Window System.</span>
+          </span>  
+          – it provides fundamental X11 interface functions.
+        </li>
+        <li>
+          <strong>Line 3:</strong> <code>#include &lt;xcb/xproto.h&gt;</code> – Includes protocol definitions and constants needed by XCB.
+        </li>
+        <li>
+          <strong>Line 4:</strong> <code>#include &lt;stdio.h&gt;</code> – Provides standard input/output functions (e.g., <code>fprintf</code>, <code>printf</code>).
+        </li>
+        <li>
+          <strong>Line 5:</strong> <code>#include &lt;stdlib.h&gt;</code> – Offers general utilities like <code>exit</code> and memory management functions.
+        </li>
+        <li>
+          <strong>Line 6:</strong> <code>#include &lt;string.h&gt;</code> – Supplies string handling functions (<code>strlen</code>, <code>strstr</code>, etc.).
+        </li>
+        <li>
+          <strong>Line 7:</strong> <code>#include &lt;dirent.h&gt;</code> – Enables directory reading functions such as <code>opendir</code> and <code>readdir</code>.
+        </li>
+        <li>
+          <strong>Line 8:</strong> <code>#include &lt;unistd.h&gt;</code> – Contains standard symbolic constants and system call functions (like <code>fork</code> and <code>execl</code>).
+        </li>
+        <li>
+          <strong>Line 9:</strong> <code>#include &lt;time.h&gt;</code> – Provides functions for manipulating date and time (<code>time</code>, <code>localtime</code>, <code>strftime</code>).
+        </li>
+        <li>
+          <strong>Line 10:</strong> <code>#include &lt;gio/gio.h&gt;</code> – Part of the GNOME GIO library; used here for GSettings and application launching.
+        </li>
+        <li>
+          <strong>Line 11:</strong> <code>#include &lt;sys/stat.h&gt;</code> – Provides file system status functions and types.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Preprocessor Defines -->
+  <details>
+    <summary>Preprocessor Defines (Lines 13-23)</summary>
+    <div>
+      <pre>
+#define WIDTH_RATIO 0.8
+#define HEIGHT 40
+#define CLOCK_WIDTH 120
+#define BUTTON_WIDTH 80
+#define BUTTON_HEIGHT 30
+#define APP_MENU_HEIGHT 400
+#define APP_MENU_WIDTH 300
+#define SETTINGS_WIDTH 300
+#define SETTINGS_HEIGHT 200
+#define VOL_WIDTH 200
+#define VOL_HEIGHT 60
+      </pre>
+      <ul>
+        <li>
+          <strong>Line 13:</strong> <code>#define WIDTH_RATIO 0.8</code>  
+          – Sets the width ratio for the taskbar relative to the screen width.
+        </li>
+        <li>
+          <strong>Line 14:</strong> <code>#define HEIGHT 40</code>  
+          – Defines the taskbar’s height in pixels.
+        </li>
+        <li>
+          <strong>Line 15:</strong> <code>#define CLOCK_WIDTH 120</code>  
+          – Width of the clock window.
+        </li>
+        <li>
+          <strong>Line 16:</strong> <code>#define BUTTON_WIDTH 80</code>  
+          – Standard width for the taskbar buttons.
+        </li>
+        <li>
+          <strong>Line 17:</strong> <code>#define BUTTON_HEIGHT 30</code>  
+          – Height for the buttons.
+        </li>
+        <li>
+          <strong>Line 18:</strong> <code>#define APP_MENU_HEIGHT 400</code>  
+          – Height of the applications menu window.
+        </li>
+        <li>
+          <strong>Line 19:</strong> <code>#define APP_MENU_WIDTH 300</code>  
+          – Width of the applications menu window.
+        </li>
+        <li>
+          <strong>Line 20:</strong> <code>#define SETTINGS_WIDTH 300</code>  
+          – Width of the settings window.
+        </li>
+        <li>
+          <strong>Line 21:</strong> <code>#define SETTINGS_HEIGHT 200</code>  
+          – Height of the settings window.
+        </li>
+        <li>
+          <strong>Line 22:</strong> <code>#define VOL_WIDTH 200</code>  
+          – Width for the volume window.
+        </li>
+        <li>
+          <strong>Line 23:</strong> <code>#define VOL_HEIGHT 60</code>  
+          – Height for the volume window.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Global Variables -->
+  <details>
+    <summary>Global Variables (Immediately after Defines)</summary>
+    <div>
+      <pre>
+xcb_connection_t *conn;
+xcb_screen_t *screen;
+xcb_window_t root, taskbar, app_button, notif_button, logout_button, clock_win;
+xcb_window_t app_menu = 0, settings_win = 0, volume_win = 0;
+xcb_gcontext_t gc;
+      </pre>
+      <ul>
+        <li>
+          <strong>xcb_connection_t *conn;</strong>  
+          – Pointer to the connection to the X server.
+        </li>
+        <li>
+          <strong>xcb_screen_t *screen;</strong>  
+          – Pointer to the screen structure that holds information about the display.
+        </li>
+        <li>
+          <strong>xcb_window_t root, taskbar, app_button, notif_button, logout_button, clock_win;</strong>  
+          – Variables representing window IDs: <code>root</code> is the main root window; <code>taskbar</code> and various buttons and the clock window are child windows.
+        </li>
+        <li>
+          <strong>xcb_window_t app_menu = 0, settings_win = 0, volume_win = 0;</strong>  
+          – Window IDs for the application menu, settings window, and volume window. They are initialized to 0 (meaning “not created”).
+        </li>
+        <li>
+          <strong>xcb_gcontext_t gc;</strong>  
+          – The graphics context used for drawing operations.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function setup_cursor -->
+  <details>
+    <summary>Function: setup_cursor() (Lines ~25-32)</summary>
+    <div>
+      <pre>
+void setup_cursor() {
+    xcb_cursor_t cursor = xcb_generate_id(conn);
+    xcb_create_glyph_cursor(conn, cursor, screen->default_colormap,
+                           screen->default_colormap, XC_left_ptr, 0, 0, 0, 0xFFFF, 0xFFFF, 0xFFFF);
+    xcb_change_window_attributes(conn, root, XCB_CW_CURSOR, &cursor);
+    xcb_free_cursor(conn, cursor);
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** <code>void setup_cursor() {</code>  
+          – Begins the function definition for <em>setup_cursor</em>, which will set the mouse pointer (cursor) for the root window.
+        </li>
+        <li>
+          **Line 2:** <code>xcb_cursor_t cursor = xcb_generate_id(conn);</code>  
+          – Generates a new unique identifier for a cursor using the current X connection (<code>conn</code>).
+        </li>
+        <li>
+          **Line 3-4:** <code>xcb_create_glyph_cursor(conn, cursor, screen->default_colormap,<br>
+                           screen->default_colormap, XC_left_ptr, 0, 0, 0, 0xFFFF, 0xFFFF, 0xFFFF);</code>  
+          – Creates a glyph cursor. It uses the default colormap twice (for source and mask) and sets the cursor shape to <code>XC_left_ptr</code> (a standard pointer icon). The numeric parameters (0, 0, 0, 0xFFFF, 0xFFFF, 0xFFFF) define the foreground and background colors.
+          <span class="tooltip">[Glyph Cursor]
+            <span class="tooltiptext">Glyph cursors are created from font glyphs. Here, they ensure the pointer looks standard.</span>
+          </span>
+        </li>
+        <li>
+          **Line 5:** <code>xcb_change_window_attributes(conn, root, XCB_CW_CURSOR, &cursor);</code>  
+          – Sets the cursor attribute of the root window to the newly created cursor.
+        </li>
+        <li>
+          **Line 6:** <code>xcb_free_cursor(conn, cursor);</code>  
+          – Frees the cursor resource on the client side since the cursor is now owned by the server.
+        </li>
+        <li>
+          **Line 7:** <code>xcb_flush(conn);</code>  
+          – Forces all pending commands to be sent to the X server immediately.
+        </li>
+        <li>
+          **Line 8:** <code>}</code>  
+          – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function set_wallpaper -->
+  <details>
+    <summary>Function: set_wallpaper() (Lines ~34-39)</summary>
+    <div>
+      <pre>
+void set_wallpaper() {
+    GSettings *settings = g_settings_new("org.gnome.desktop.background");
+    g_settings_set_string(settings, "picture-uri", "file:///usr/share/backgrounds/default.jpg");
+    g_object_unref(settings);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** <code>void set_wallpaper() {</code>  
+          – Begins a function that sets the desktop wallpaper.
+        </li>
+        <li>
+          **Line 2:** <code>GSettings *settings = g_settings_new("org.gnome.desktop.background");</code>  
+          – Creates a new <code>GSettings</code> object for the GNOME desktop background schema.
+        </li>
+        <li>
+          **Line 3:** <code>g_settings_set_string(settings, "picture-uri", "file:///usr/share/backgrounds/default.jpg");</code>  
+          – Sets the <code>picture-uri</code> key to point to the wallpaper image file.
+        </li>
+        <li>
+          **Line 4:** <code>g_object_unref(settings);</code>  
+          – Decreases the reference count of the <code>settings</code> object, freeing it if no longer needed.
+        </li>
+        <li>
+          **Line 5:** <code>}</code>  
+          – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function draw_text -->
+  <details>
+    <summary>Function: draw_text(xcb_window_t, int, int, const char*, uint32_t) (Lines ~41-47)</summary>
+    <div>
+      <pre>
+void draw_text(xcb_window_t win, int x, int y, const char *txt, uint32_t color) {
+    xcb_change_gc(conn, gc, XCB_GC_FOREGROUND, &color);
+    xcb_image_text_8(conn, strlen(txt), win, gc, x, y, txt);
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** The function declaration defines <code>draw_text</code> to draw a text string on a given window. Parameters include the window (<code>win</code>), x and y coordinates, the text (<code>txt</code>), and the color.
+        </li>
+        <li>
+          **Line 2:** <code>xcb_change_gc(conn, gc, XCB_GC_FOREGROUND, &color);</code> – Updates the graphics context (<code>gc</code>) to set the foreground color for drawing.
+        </li>
+        <li>
+          **Line 3:** <code>xcb_image_text_8(conn, strlen(txt), win, gc, x, y, txt);</code> – Draws an 8-bit text string into the window at the specified coordinates.
+        </li>
+        <li>
+          **Line 4:** <code>xcb_flush(conn);</code> – Flushes the command buffer so that drawing appears immediately.
+        </li>
+        <li>
+          **Line 5:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function launch_app -->
+  <details>
+    <summary>Function: launch_app(const char *) (Lines ~49-56)</summary>
+    <div>
+      <pre>
+void launch_app(const char *desktop_file) {
+    GDesktopAppInfo *app = g_desktop_app_info_new_from_filename(desktop_file);
+    if (app) {
+        g_app_info_launch(G_APP_INFO(app), NULL, NULL, NULL);
+        g_object_unref(app);
+    }
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** Begins the <code>launch_app</code> function that accepts a string pointing to a <code>.desktop</code> file.
+        </li>
+        <li>
+          **Line 2:** <code>GDesktopAppInfo *app = g_desktop_app_info_new_from_filename(desktop_file);</code>  
+          – Loads application information from the desktop file.
+        </li>
+        <li>
+          **Line 3:** <code>if (app) {</code>  
+          – Checks if the application info was successfully loaded.
+        </li>
+        <li>
+          **Line 4:** <code>g_app_info_launch(G_APP_INFO(app), NULL, NULL, NULL);</code>  
+          – Launches the application by converting <code>app</code> into a generic <code>GAppInfo</code> and then calling <code>g_app_info_launch</code>.
+        </li>
+        <li>
+          **Line 5:** <code>g_object_unref(app);</code>  
+          – Releases the reference to the <code>app</code> object.
+        </li>
+        <li>
+          **Line 6:** <code>}</code> – Ends the <code>if</code> block.
+        </li>
+        <li>
+          **Line 7:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function show_app_menu -->
+  <details>
+    <summary>Function: show_app_menu() (Lines ~58-86)</summary>
+    <div>
+      <pre>
+void show_app_menu() {
+    if (app_menu) {
+        xcb_map_window(conn, app_menu);
+        xcb_flush(conn);
+        return;
+    }
+
+    uint32_t values[] = {0x222222, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_BUTTON_PRESS};
+    app_menu = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, app_menu, root, 100, 100, APP_MENU_WIDTH, APP_MENU_HEIGHT,
+                      2, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual,
+                      XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK, values);
+    xcb_map_window(conn, app_menu);
+
+    const char *xdg_data_dirs = getenv("XDG_DATA_DIRS");
+    if (!xdg_data_dirs) xdg_data_dirs = "/usr/share:/usr/local/share";
+    char *dirs = strdup(xdg_data_dirs);
+    char *dir = strtok(dirs, ":");
+    int y = 20;
+
+    while (dir && y < APP_MENU_HEIGHT) {
+        char path[512];
+        snprintf(path, sizeof(path), "%s/applications", dir);
+        DIR *d = opendir(path);
+        if (d) {
+            struct dirent *entry;
+            while ((entry = readdir(d)) && y < APP_MENU_HEIGHT) {
+                if (strstr(entry->d_name, ".desktop")) {
+                    char full_path[512];
+                    snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+                    GDesktopAppInfo *app = g_desktop_app_info_new_from_filename(full_path);
+                    if (app) {
+                        const char *name = g_app_info_get_name(G_APP_INFO(app));
+                        draw_text(app_menu, 10, y, name, 0xFFFFFF);
+                        y += 20;
+                        g_object_unref(app);
+                    }
+                }
+            }
+            closedir(d);
+        }
+        dir = strtok(NULL, ":");
+    }
+    free(dirs);
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** <code>void show_app_menu() {</code>  
+          – Starts the function that displays the applications menu.
+        </li>
+        <li>
+          **Line 2-5:**  
+          <code>
+          if (app_menu) {<br>
+              xcb_map_window(conn, app_menu);<br>
+              xcb_flush(conn);<br>
+              return;<br>
+          }
+          </code>  
+          – If <code>app_menu</code> already exists (i.e. it’s been created before), the function simply maps (shows) it and flushes the changes.
+        </li>
+        <li>
+          **Line 7:** <code>uint32_t values[] = {0x222222, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_BUTTON_PRESS};</code>  
+          – Sets initial window attributes: background color (0x222222) and event masks for exposure and button press events.
+        </li>
+        <li>
+          **Line 8:** <code>app_menu = xcb_generate_id(conn);</code>  
+          – Generates a unique ID for the <code>app_menu</code> window.
+        </li>
+        <li>
+          **Line 9-11:**  
+          <code>xcb_create_window(conn, XCB_COPY_FROM_PARENT, app_menu, root, 100, 100, APP_MENU_WIDTH, APP_MENU_HEIGHT,<br>
+                      2, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual,<br>
+                      XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK, values);</code>  
+          – Creates the application menu window as a child of the root window with specified dimensions and attributes.
+        </li>
+        <li>
+          **Line 12:** <code>xcb_map_window(conn, app_menu);</code>  
+          – Maps (displays) the app menu window.
+        </li>
+        <li>
+          **Line 14:** <code>const char *xdg_data_dirs = getenv("XDG_DATA_DIRS");</code>  
+          – Retrieves the environment variable <code>XDG_DATA_DIRS</code>, which lists directories containing application data.
+        </li>
+        <li>
+          **Line 15:** <code>if (!xdg_data_dirs) xdg_data_dirs = "/usr/share:/usr/local/share";</code>  
+          – If the environment variable isn’t set, defaults to standard directories.
+        </li>
+        <li>
+          **Line 16:** <code>char *dirs = strdup(xdg_data_dirs);</code>  
+          – Duplicates the string so it can be tokenized safely.
+        </li>
+        <li>
+          **Line 17:** <code>char *dir = strtok(dirs, ":");</code>  
+          – Uses <code>strtok</code> to get the first directory in the colon-separated list.
+        </li>
+        <li>
+          **Line 18:** <code>int y = 20;</code>  
+          – Initializes a vertical coordinate (<code>y</code>) to start drawing application names.
+        </li>
+        <li>
+          **Line 20-32:**  
+          A <code>while</code> loop that:
+          <ul>
+            <li>
+              Iterates over each directory in <code>dirs</code> (each directory from <code>XDG_DATA_DIRS</code>).
+            </li>
+            <li>
+              Constructs a path to the “applications” subdirectory.
+            </li>
+            <li>
+              Opens the directory and reads entries.
+            </li>
+            <li>
+              For each entry that contains <code>".desktop"</code>, it:
+              <ul>
+                <li>
+                  Builds the full file path.
+                </li>
+                <li>
+                  Uses <code>g_desktop_app_info_new_from_filename</code> to load the desktop file.
+                </li>
+                <li>
+                  If loaded, retrieves and draws the application name at the current <code>y</code> coordinate.
+                </li>
+                <li>
+                  Increments <code>y</code> so the next app name is drawn lower.
+                </li>
+                <li>
+                  Frees the <code>GDesktopAppInfo</code> object.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Closes the directory after processing.
+            </li>
+          </ul>
+        </li>
+        <li>
+          **Line 33:** <code>dir = strtok(NULL, ":");</code>  
+          – Gets the next directory in the list.
+        </li>
+        <li>
+          **Line 35:** <code>free(dirs);</code>  
+          – Releases the duplicated string memory.
+        </li>
+        <li>
+          **Line 36:** <code>xcb_flush(conn);</code>  
+          – Flushes all pending requests to ensure the window and drawn text are rendered immediately.
+        </li>
+        <li>
+          **Line 37:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function show_settings -->
+  <details>
+    <summary>Function: show_settings() (Lines ~88-96)</summary>
+    <div>
+      <pre>
+void show_settings() {
+    if (settings_win) {
+        xcb_map_window(conn, settings_win);
+        xcb_flush(conn);
+        return;
+    }
+
+    uint32_t values[] = {0x444444, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_BUTTON_PRESS};
+    settings_win = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, settings_win, root, 200, 200, SETTINGS_WIDTH, SETTINGS_HEIGHT,
+                      2, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual,
+                      XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK, values);
+    xcb_map_window(conn, settings_win);
+    draw_text(settings_win, 10, 20, "Settings (Coming Soon)", 0xFFFFFF);
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** Begins the function that creates (or, if already created, shows) the settings window.
+        </li>
+        <li>
+          **Line 2-5:**  
+          <code>
+          if (settings_win) {<br>
+              xcb_map_window(conn, settings_win);<br>
+              xcb_flush(conn);<br>
+              return;<br>
+          }
+          </code>  
+          – If the settings window already exists, it is mapped (displayed) and the function returns.
+        </li>
+        <li>
+          **Line 7:** <code>uint32_t values[] = {0x444444, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_BUTTON_PRESS};</code>  
+          – Sets background color (0x444444) and sets event masks for exposure and button press.
+        </li>
+        <li>
+          **Line 8:** <code>settings_win = xcb_generate_id(conn);</code>  
+          – Generates a unique identifier for the settings window.
+        </li>
+        <li>
+          **Line 9-11:**  
+          Creates the settings window as a child of the root window at position (200,200) with dimensions defined by <code>SETTINGS_WIDTH</code> and <code>SETTINGS_HEIGHT</code>. It uses the previously defined <code>values</code> for attributes.
+        </li>
+        <li>
+          **Line 12:** <code>xcb_map_window(conn, settings_win);</code>  
+          – Maps (displays) the settings window.
+        </li>
+        <li>
+          **Line 13:** <code>draw_text(settings_win, 10, 20, "Settings (Coming Soon)", 0xFFFFFF);</code>  
+          – Draws a placeholder text indicating that the settings functionality is not yet implemented.
+        </li>
+        <li>
+          **Line 14:** <code>xcb_flush(conn);</code> – Flushes the requests.
+        </li>
+        <li>
+          **Line 15:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function show_volume -->
+  <details>
+    <summary>Function: show_volume() (Lines ~98-106)</summary>
+    <div>
+      <pre>
+void show_volume() {
+    if (volume_win) {
+        xcb_map_window(conn, volume_win);
+        xcb_flush(conn);
+        return;
+    }
+
+    uint32_t values[] = {0x333355, XCB_EVENT_MASK_EXPOSURE};
+    volume_win = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, volume_win, root, 250, 150, VOL_WIDTH, VOL_HEIGHT,
+                      2, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual,
+                      XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK, values);
+    xcb_map_window(conn, volume_win);
+    draw_text(volume_win, 10, 20, "Volume: use keys", 0xFFFFFF);
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** Starts the <code>show_volume</code> function.
+        </li>
+        <li>
+          **Line 2-5:**  
+          Checks if the volume window already exists; if so, maps it and flushes the connection.
+        </li>
+        <li>
+          **Line 7:** <code>uint32_t values[] = {0x333355, XCB_EVENT_MASK_EXPOSURE};</code>  
+          – Sets up the attributes for the volume window: background color and exposure event mask.
+        </li>
+        <li>
+          **Line 8:** <code>volume_win = xcb_generate_id(conn);</code>  
+          – Generates a unique ID for the volume window.
+        </li>
+        <li>
+          **Line 9-10:** Creates the volume window as a child of the root window positioned at (250,150) with width and height defined by <code>VOL_WIDTH</code> and <code>VOL_HEIGHT</code>.
+        </li>
+        <li>
+          **Line 11:** <code>xcb_map_window(conn, volume_win);</code>  
+          – Maps (displays) the volume window.
+        </li>
+        <li>
+          **Line 12:** <code>draw_text(volume_win, 10, 20, "Volume: use keys", 0xFFFFFF);</code>  
+          – Draws text in the volume window with instructions.
+        </li>
+        <li>
+          **Line 13:** <code>xcb_flush(conn);</code> – Flushes the connection.
+        </li>
+        <li>
+          **Line 14:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function change_volume -->
+  <details>
+    <summary>Function: change_volume(const char *) (Lines ~108-113)</summary>
+    <div>
+      <pre>
+void change_volume(const char *cmd) {
+    if (fork() == 0) {
+        execl("/bin/sh", "sh", "-c", cmd, NULL);
+        exit(1);
+    }
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** Begins the function which takes a command string (<code>cmd</code>) to change the volume.
+        </li>
+        <li>
+          **Line 2:** <code>if (fork() == 0) {</code>  
+          – Forks a new process. If this returns 0, we’re in the child process.
+        </li>
+        <li>
+          **Line 3:** <code>execl("/bin/sh", "sh", "-c", cmd, NULL);</code>  
+          – Executes the shell with <code>cmd</code> as its argument. This allows volume commands to be run.
+        </li>
+        <li>
+          **Line 4:** <code>exit(1);</code>  
+          – If <code>execl</code> fails, exits the child process with an error.
+        </li>
+        <li>
+          **Line 5:** <code>}</code> – Closes the <code>if</code> block.
+        </li>
+        <li>
+          **Line 6:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function grab_keys -->
+  <details>
+    <summary>Function: grab_keys() (Lines ~115-121)</summary>
+    <div>
+      <pre>
+void grab_keys() {
+    xcb_grab_key(conn, 1, root, XCB_MOD_MASK_4, XCB_NO_SYMBOL, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
+    xcb_grab_key(conn, 1, root, XCB_MOD_MASK_ANY, 0x1008FF11, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC); // Vol Down
+    xcb_grab_key(conn, 1, root, XCB_MOD_MASK_ANY, 0x1008FF13, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC); // Vol Up
+    xcb_grab_key(conn, 1, root, XCB_MOD_MASK_ANY, 0x1008FF12, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC); // Mute
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** Begins the <code>grab_keys</code> function used to capture specific key events.
+        </li>
+        <li>
+          **Line 2:** <code>xcb_grab_key(conn, 1, root, XCB_MOD_MASK_4, XCB_NO_SYMBOL, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);</code>  
+          – Grabs a key event (with <code>XCB_MOD_MASK_4</code>—typically the Super/Windows key) on the root window. This may be used to trigger the app menu.
+        </li>
+        <li>
+          **Line 3:** Grabs the key corresponding to <code>0x1008FF11</code> (vol down) with any modifier.
+        </li>
+        <li>
+          **Line 4:** Grabs the key corresponding to <code>0x1008FF13</code> (vol up).
+        </li>
+        <li>
+          **Line 5:** Grabs the key corresponding to <code>0x1008FF12</code> (mute).
+        </li>
+        <li>
+          **Line 6:** <code>xcb_flush(conn);</code> – Flushes the commands to ensure the grabs take effect.
+        </li>
+        <li>
+          **Line 7:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function draw_clock -->
+  <details>
+    <summary>Function: draw_clock() (Lines ~123-131)</summary>
+    <div>
+      <pre>
+void draw_clock() {
+    time_t t = time(NULL);
+    struct tm *tm = localtime(&t);
+    char buf[64];
+    strftime(buf, sizeof(buf), "%H:%M:%S", tm);
+
+    uint32_t color = 0x333333;
+    xcb_change_gc(conn, gc, XCB_GC_FOREGROUND, &color);
+    xcb_poly_fill_rectangle(conn, clock_win, gc, 1, &(xcb_rectangle_t){0, 0, CLOCK_WIDTH, 30});
+    draw_text(clock_win, 10, 20, buf, 0xFFFFFF);
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** Begins the <code>draw_clock</code> function which is responsible for displaying the current time.
+        </li>
+        <li>
+          **Line 2:** <code>time_t t = time(NULL);</code>  
+          – Gets the current time as a <code>time_t</code> value.
+        </li>
+        <li>
+          **Line 3:** <code>struct tm *tm = localtime(&t);</code>  
+          – Converts the current time to local time structure.
+        </li>
+        <li>
+          **Line 4:** <code>char buf[64];</code>  
+          – Declares a buffer to hold the formatted time string.
+        </li>
+        <li>
+          **Line 5:** <code>strftime(buf, sizeof(buf), "%H:%M:%S", tm);</code>  
+          – Formats the time into a string (<code>buf</code>) in “hour:minute:second” format.
+        </li>
+        <li>
+          **Line 7:** <code>uint32_t color = 0x333333;</code>  
+          – Sets a color variable for the background of the clock area.
+        </li>
+        <li>
+          **Line 8:** <code>xcb_change_gc(conn, gc, XCB_GC_FOREGROUND, &color);</code>  
+          – Changes the graphics context's foreground color to <code>color</code>.
+        </li>
+        <li>
+          **Line 9:** <code>xcb_poly_fill_rectangle(conn, clock_win, gc, 1, &(xcb_rectangle_t){0, 0, CLOCK_WIDTH, 30});</code>  
+          – Fills a rectangle in the clock window to create a background using the current <code>gc</code>.
+        </li>
+        <li>
+          **Line 10:** <code>draw_text(clock_win, 10, 20, buf, 0xFFFFFF);</code>  
+          – Draws the formatted time string (<code>buf</code>) in white on top of the background.
+        </li>
+        <li>
+          **Line 11:** <code>xcb_flush(conn);</code> – Flushes the drawing commands.
+        </li>
+        <li>
+          **Line 12:** <code>}</code> – Ends the function.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Section: Function create_taskbar -->
+  <details>
+    <summary>Function: create_taskbar() (Lines ~133-156)</summary>
+    <div>
+      <pre>
+void create_taskbar() {
+    int width = screen->width_in_pixels * WIDTH_RATIO;
+    int x = (screen->width_in_pixels - width) / 2;
+    int y = screen->height_in_pixels - HEIGHT - 10;
+
+    uint32_t mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK | XCB_CW_OVERRIDE_REDIRECT;
+    uint32_t values[] = {0x333333, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_BUTTON_PRESS, 1};
+
+    taskbar = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, taskbar, root, x, y, width, HEIGHT, 0,
+                      XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual, mask, values);
+    xcb_map_window(conn, taskbar);
+
+    // Create buttons and clock
+    values[0] = 0x555555;
+    values[1] = XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_BUTTON_PRESS;
+
+    app_button = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, app_button, taskbar, 10, 5, BUTTON_WIDTH, BUTTON_HEIGHT,
+                      0, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual, mask, values);
+    xcb_map_window(conn, app_button);
+
+    notif_button = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, notif_button, taskbar, 100, 5, BUTTON_WIDTH, BUTTON_HEIGHT,
+                      0, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual, mask, values);
+    xcb_map_window(conn, notif_button);
+
+    logout_button = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, logout_button, taskbar, 190, 5, BUTTON_WIDTH, BUTTON_HEIGHT,
+                      0, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual, mask, values);
+    xcb_map_window(conn, logout_button);
+
+    values[0] = 0x333333;
+    values[1] = XCB_EVENT_MASK_EXPOSURE;
+    clock_win = xcb_generate_id(conn);
+    xcb_create_window(conn, XCB_COPY_FROM_PARENT, clock_win, taskbar, width - CLOCK_WIDTH - 10, 5, CLOCK_WIDTH, 30,
+                      0, XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual, mask, values);
+    xcb_map_window(conn, clock_win);
+
+    gc = xcb_generate_id(conn);
+    xcb_create_gc(conn, gc, taskbar, 0, NULL);
+    xcb_flush(conn);
+}
+      </pre>
+      <ul>
+        <li>
+          **Line 1:** <code>void create_taskbar() {</code>  
+          – Begins the definition of the <code>create_taskbar</code> function.
+        </li>
+        <li>
+          **Line 2:** <code>int width = screen-&gt;width_in_pixels * WIDTH_RATIO;</code>  
+          – Calculates the width of the taskbar using the screen’s width and the predefined <code>WIDTH_RATIO</code>.
+        </li>
+        <li>
+          **Line 3:** <code>int x = (screen-&gt;width_in_pixels - width) / 2;</code>  
+          – Centers the taskbar horizontally.
+        </li>
+        <li>
+          **Line 4:** <code>int y = screen-&gt;height_in_pixels - HEIGHT - 10;</code>  
+          – Positions the taskbar vertically near the bottom of the screen (with a 10-pixel margin).
+        </li>
+        <li>
+          **Line 6:** <code>uint32_t mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK | XCB_CW_OVERRIDE_REDIRECT;</code>  
+          – Sets up the mask for window attributes—background pixel, event mask, and override redirection (the window manager ignores these windows).
+        </li>
+        <li>
+          **Line 7:** <code>uint32_t values[] = {0x333333, XCB_EVENT_MASK_EXPOSURE | XCB_EVENT_MASK_BUTTON_PRESS, 1};</code>  
+          – Defines the initial values: background color <code>0x333333</code>, event mask for exposure and button press, and a flag (commonly for override redirect).
+        </li>
+        <li>
+          **Line 9:** <code>taskbar = xcb_generate_id(conn);</code> – Generates a unique ID for the taskbar.
+        </li>
+        <li>
+          **Line 10-12:** Creates the taskbar window with the calculated <code>x</code>, <code>y</code>, <code>width</code>, and predefined <code>HEIGHT</code>.
+        </li>
+        <li>
+          **Line 13:** <code>xcb_map_window(conn, taskbar);</code> – Maps (displays) the taskbar.
+        </li>
+        <li>
+          **Line 15:** Comment <code>// Create buttons and clock</code> explains that the following lines create child windows.
+        </li>
+        <li>
+          **Line 16-17:**  
+          Updates <code>values</code> for the buttons (background color <code>0x555555</code> and event masks).
+        </li>
+        <li>
+          **Line 19-21:** Creates <code>app_button</code> as a child window of the taskbar at position (10,5) with dimensions defined by <code>BUTTON_WIDTH</code> and <code>BUTTON_HEIGHT</code>.
+        </li>
+        <li>
+          **Line 22:** Maps the app button.
+        </li>
+        <li>
+          **Line 24-26:** Similarly, creates and maps the <code>notif_button</code> (notification button) at (100,5).
+        </li>
+        <li>
+          **Line 28-30:** Creates and maps the <code>logout_button</code> at (190,5).
+        </li>
+        <li>
+          **Line 32-34:**  
+          Updates <code>values</code> for the clock window (background color reverts to <code>0x333333</code> and event mask for exposure only), generates an ID, creates, and maps the clock window positioned at the right side of the taskbar.
+        </li>
+        <li>
+          **Line 36:** <code>gc = xcb_generate_id(conn);</code> – Generates an ID for the graphics context.
+        </li>
+        <li>
+          **Line 37:** <code>xcb_create_gc(conn, gc, taskbar, 0, NULL);</code> – Creates the graphics context for drawing on the taskbar.
+        </li>
+        <li>
+          **Line 38:** <code>xcb_flush(conn);</code> – Flushes the XCB
