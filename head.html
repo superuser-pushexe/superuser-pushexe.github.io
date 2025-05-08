@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <script defer src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <h1>Forum</h1>
+    <button onclick="signInGoogle()">Sign In with Google</button>
+    <button onclick="signOut()">Sign Out</button>
+    <div id="user-info"></div>
+
+    <h2>Create a Post</h2>
+    <input type="text" id="postContent" placeholder="Write something...">
+    <button onclick="createPost()">Post</button>
+
+    <h2>Posts</h2>
+    <div id="posts"></div>
+</body>
+</html>
